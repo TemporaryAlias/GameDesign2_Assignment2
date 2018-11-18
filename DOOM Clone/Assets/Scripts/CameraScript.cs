@@ -27,7 +27,13 @@ public class CameraScript : MonoBehaviour {
         smoothV.y = Mathf.Lerp(smoothV.y, md.y, 1f / smoothing);
         mouselook += smoothV;
 
-        transform.localRotation = Quaternion.AngleAxis(-mouselook.y, Vector3.right);
+        if(mouselook.y > -65 && mouselook.y < 65)
+        {
+            transform.localRotation = Quaternion.AngleAxis(-mouselook.y, Vector3.right);
+        }
+
         character.transform.localRotation = Quaternion.AngleAxis(mouselook.x, character.transform.up);
+
+
     }
 }
