@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerScript : MonoBehaviour {
 
     private Rigidbody _myRb;
+    public float playerHealth;
     
     [SerializeField] float speed;
     
@@ -53,9 +54,27 @@ public class PlayerScript : MonoBehaviour {
         }     
         
 
-
+        if(playerHealth <= 0)
+        {
+            Die();
+        }
        
     }
 
-    
+    void Die()
+    {
+        Destroy(gameObject);
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        
+        if (collision.gameObject.tag == "EnemyProjectile")
+        {
+            Debug.Log("hit");
+            playerHealth -= 1;
+        }
+    }
+
+
 }
