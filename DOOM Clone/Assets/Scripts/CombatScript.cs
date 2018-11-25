@@ -99,7 +99,7 @@ public class CombatScript : MonoBehaviour {
         {
             Debug.Log(hit.transform.name);
 
-            EnemyScript target = hit.transform.GetComponent<EnemyScript>();
+            GermEnemyScript target = hit.transform.GetComponent<GermEnemyScript>();
             if(target != null && target.tag == "BlueEnemy")
             {
                 target.TakeDamage(damage);
@@ -122,7 +122,7 @@ public class CombatScript : MonoBehaviour {
         {
             Debug.Log(hit.transform.name);
 
-            EnemyScript target = hit.transform.GetComponent<EnemyScript>();
+            DustEnemyScript target = hit.transform.GetComponent<DustEnemyScript>();
             if(target != null && target.tag == "RedEnemy")
             {
                 target.TakeDamage(damage);
