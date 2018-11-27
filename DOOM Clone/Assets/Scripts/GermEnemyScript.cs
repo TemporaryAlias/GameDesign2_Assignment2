@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class GermEnemyScript : MonoBehaviour {
 
@@ -8,12 +9,18 @@ public class GermEnemyScript : MonoBehaviour {
 
     public float EnemyHealth;
     [SerializeField] GameObject Player, EnemyProjectile;
-    [SerializeField] float shotTimer, shotCD, speed, dist;
+    [SerializeField] Transform projectileSpawnPoint;
+    [SerializeField] float shotTimer, shotCD, speed, dist, agroRange, rangedAttackDist;
+
+    NavMeshAgent navAgent;
 
     private void Start()
     {
-        shotCD = Random.Range(1, 10);
-        shotTimer = shotCD;
+        navAgent = GetComponent<NavMeshAgent>();
+        navAgent.stoppingDistance = rangedAttackDist;
+
+        shotTimer = Random.Range(1, 10);
+        //shotTimer = shotCD;
     }
 
     private void FixedUpdate()
@@ -22,9 +29,8 @@ public class GermEnemyScript : MonoBehaviour {
 
         dist = Vector3.Distance(transform.position, Player.transform.position);
         
-        if(dist > 150)
-        {
-            Vector3.MoveTowards(transform.position, Player.transform.position, speed * Time.deltaTime);
+        if(dist > rangedAttackDist && dist < agroRange) {
+            navAgent.SetDestination(Player.transform.position);
         } 
 
         if (shotTimer > 0)
@@ -32,10 +38,11 @@ public class GermEnemyScript : MonoBehaviour {
             shotTimer -= Time.deltaTime;
         }
 
-        if (shotTimer <= 0)
+        if (dist <= rangedAttackDist && shotTimer <= 0)
         {
-            Instantiate(EnemyProjectile, new Vector3(transform.position.x, transform.position.y + 150, transform.position.z),transform.rotation);
-            shotTimer = 6;
+            //Instantiate(EnemyProjectile, new Vector3(transform.position.x, transform.position.y + 150, transform.position.z),transform.rotation);
+            Instantiate(EnemyProjectile, projectileSpawnPoint.position, transform.rotation);
+            shotTimer = shotCD;
         }
     }
 
@@ -58,5 +65,14 @@ public class GermEnemyScript : MonoBehaviour {
         Destroy(gameObject);
     }
 
-    
+    void OnDrawGizmos() {
+        Gizmos.color = Color.yellow;
+
+        Gizmos.DrawWireSphere(transform.position, agroRange);
+
+        Gizmos.color = Color.red;
+
+        Gizmos.DrawWireSphere(transform.position, rangedAttackDist);
+    }
+
 }
