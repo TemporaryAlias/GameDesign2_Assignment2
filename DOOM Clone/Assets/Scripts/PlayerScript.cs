@@ -1,13 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerScript : MonoBehaviour {
 
     private Rigidbody _myRb;
-    public float playerHealth;
+    public float playerHealth, maxHealth;
     
     [SerializeField] float speed;
+
+    [SerializeField] Slider healthBar;
     
 
 	// Use this for initialization
@@ -17,6 +20,9 @@ public class PlayerScript : MonoBehaviour {
         //locks the cursor, making it unusable
 
         Cursor.lockState = CursorLockMode.Locked;
+        playerHealth = maxHealth;
+
+        healthBar.value = CalculateHealth();
 	}
 	
 	// Update is called once per frame
@@ -51,14 +57,21 @@ public class PlayerScript : MonoBehaviour {
         else if (xMove > 0 && Input.GetKey(KeyCode.D))
         {
             transform.Translate(Vector3.right * speed);
-        }     
-        
+        }
 
-        if(playerHealth <= 0)
+        healthBar.value = CalculateHealth();
+
+
+        if (playerHealth <= 0)
         {
             Die();
         }
        
+    }
+
+    float CalculateHealth()
+    {
+        return playerHealth / maxHealth;
     }
 
     void Die()
