@@ -2137,7 +2137,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemyHealth: 30
-  Player: {fileID: 0}
+  Player: {fileID: 1840661258002868, guid: d61a17cb20d08bf458f4d85d38cd6889, type: 2}
   EnemyProjectile: {fileID: 1277760823614316, guid: 10e1cbdabae893746b0e1df4d5d93cb4,
     type: 2}
   projectileSpawnPoint: {fileID: 4610499093952170}

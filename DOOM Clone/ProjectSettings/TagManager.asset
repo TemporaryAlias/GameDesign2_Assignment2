@@ -9,6 +9,7 @@ TagManager:
   - RedEnemy
   - EnemyProjectile
   - Wall
+  - Stain Enemy
   layers:
   - Default
   - TransparentFX
