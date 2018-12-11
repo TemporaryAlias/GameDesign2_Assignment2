@@ -7,10 +7,12 @@ public class PlayerScript : MonoBehaviour {
 
     private Rigidbody _myRb;
     public float playerHealth, maxHealth;
+    private float dustEnemycount, germEnemycount, stainEnemycount, maxEnemies, currentEnemies;
     
     [SerializeField] float speed;
 
     [SerializeField] Slider healthBar;
+    [SerializeField] Text remainingEnemies;
     
 
 	// Use this for initialization
@@ -21,8 +23,14 @@ public class PlayerScript : MonoBehaviour {
 
         Cursor.lockState = CursorLockMode.Locked;
         playerHealth = maxHealth;
-
+        dustEnemycount = GameObject.FindGameObjectsWithTag("RedEnemy").Length;
+        stainEnemycount = GameObject.FindGameObjectsWithTag("Stain Enemy").Length;
+        germEnemycount = GameObject.FindGameObjectsWithTag("BlueEnemy").Length;
+        maxEnemies = germEnemycount + dustEnemycount + stainEnemycount;
+        currentEnemies = maxEnemies;
         healthBar.value = CalculateHealth();
+        //EnemyCount().ToString();
+        remainingEnemies.text = EnemyCount().ToString(); 
 	}
 	
 	// Update is called once per frame
@@ -60,7 +68,7 @@ public class PlayerScript : MonoBehaviour {
         }
 
         healthBar.value = CalculateHealth();
-
+        remainingEnemies.text = "Enemies Remaining: " + EnemyCount().ToString();
 
         if (playerHealth <= 0)
         {
@@ -74,6 +82,13 @@ public class PlayerScript : MonoBehaviour {
         return playerHealth / maxHealth;
     }
 
+    float EnemyCount()
+    {
+        dustEnemycount = GameObject.FindGameObjectsWithTag("RedEnemy").Length;
+        stainEnemycount = GameObject.FindGameObjectsWithTag("Stain Enemy").Length;
+        germEnemycount = GameObject.FindGameObjectsWithTag("BlueEnemy").Length;
+        return (dustEnemycount + germEnemycount + stainEnemycount);
+    }
     void Die()
     {
         Destroy(gameObject);
@@ -88,6 +103,8 @@ public class PlayerScript : MonoBehaviour {
             playerHealth -= 1;
         }
     }
+
+   
 
 
 }

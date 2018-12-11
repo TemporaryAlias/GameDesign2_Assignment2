@@ -8,12 +8,15 @@ public class CombatScript : MonoBehaviour {
 
     private Animator playerAnim;
     [SerializeField] Animator swordAnim, gunAnim;
-    [SerializeField] GameObject _blueWeapon, _redWeapon, _redEnemy, _blueEnemy, _swordHitBox, _vacuum;
+    [SerializeField] GameObject _blueWeapon, _redWeapon, _redEnemy, _blueEnemy, _swordHitBox, _vacuum, _reloader;
     GameObject dustEnemy;
     [SerializeField] ParticleSystem muzzleFlash;
     public float damage = 10f, attackCD;
+    public float maxAmmo, currentAmmo, reloadTimer;
+    [SerializeField] Slider ammoBar, reloadBar; 
     private float cdTimer;
-    private bool _isRed, _isBlue, _hasAttacked, isSucking;
+    
+    private bool _isRed, _isBlue, _hasAttacked, isSucking, _vaccuumOn;
     public GameObject _impactEffect;
 
     //TEMP: Text to notify if wrong weapon was used
@@ -25,49 +28,54 @@ public class CombatScript : MonoBehaviour {
         //swordAnim = GetComponentInChildren
         _isBlue = true;
         cdTimer = attackCD;
-        dustEnemy = GameObject.FindGameObjectWithTag("RedEnemy");
+        currentAmmo = maxAmmo;
+        ammoBar.value = AmmoCount();
+        
         //TEMP: Set notify text to nothing
         notifyText.text = "";
     }
 	
 	// Update is called once per frame
 	void Update () {
-		
+
+        dustEnemy = GameObject.FindGameObjectWithTag("RedEnemy");
         //Switches between the two weapon types. Blue Weapon is the shotgun, RedWeapon is the sword/melee
 
-        if(Input.GetAxis("Mouse ScrollWheel") > 0)
+        if (Input.GetAxis("Mouse ScrollWheel") > 0)
         {
             BlueWeapon();
             _isBlue = true;
-            isSucking = false;
+            _isRed = false;
+            _vaccuumOn = false;
         } else if (Input.GetAxis("Mouse ScrollWheel") < 0)
         {
             RedWeapon();
+            _isRed = true;
             _isBlue = false;
-            isSucking = false;
-        }
-
-        if(Input.GetKeyDown(KeyCode.F))
+            _vaccuumOn = false;
+        } else if(Input.GetKeyDown(KeyCode.F))
         {
             Vacuum();
-            isSucking = true;
+            _vaccuumOn = true;
+            _isRed = false;
+            _isBlue = false;
         }
 
 
         //Calls the shoot function, and sets the cooldown (attackCD) for the shot, also calls animation
 
-        if (_isBlue && Input.GetMouseButtonDown(0) && _hasAttacked == false && isSucking == false)
+        if (_isBlue && Input.GetMouseButtonDown(0) && _hasAttacked == false && isSucking == false && currentAmmo > 0)
         {
+            currentAmmo -= 1;
             _hasAttacked = true;
             //_blueEnemy.SetActive(false);
             gunAnim.SetTrigger("Shoot");
             Shoot();
-            
         } 
 
         //Sword swing, calls the swing function and sets the cooldown for the attack, also calls swing animation
 
-        else if (_isBlue == false && Input.GetMouseButtonDown(0) && _hasAttacked == false && isSucking == false)
+        else if (_isRed && Input.GetMouseButtonDown(0) && _hasAttacked == false && isSucking == false)
         {
             _hasAttacked = true;
             //_redEnemy.SetActive(false);
@@ -76,9 +84,13 @@ public class CombatScript : MonoBehaviour {
             Swing();
         }
 
-        if(Input.GetMouseButton(0) && isSucking == true)
+        if(Input.GetMouseButton(0) && _vaccuumOn == true && isSucking == false)
         {
+            isSucking = true;
             SuckemUp();
+        } else
+        {
+            isSucking = false;
         }
 
         //Starts the cooldown timer once Shoot function has been called
@@ -95,6 +107,33 @@ public class CombatScript : MonoBehaviour {
             attackCD = cdTimer;
             _hasAttacked = false;
         }
+
+        ammoBar.value = AmmoCount();
+
+        if(Input.GetKey(KeyCode.E))
+        {
+            Reload();
+        }
+        else
+        {
+            _reloader.SetActive(false);
+        }
+
+        if (reloadTimer <= 0 && currentAmmo <= 20)
+        {
+            currentAmmo += 2;
+            reloadTimer = 1;
+        } else if(currentAmmo >= 20)
+        {
+            currentAmmo = 20;
+            reloadTimer = 1;
+        }
+
+    }
+
+    float AmmoCount()
+    {
+        return currentAmmo / maxAmmo;
     }
 
     //function for holding blue weapon, aka shotgun
@@ -112,12 +151,13 @@ public class CombatScript : MonoBehaviour {
         _redWeapon.SetActive(true);
         _vacuum.SetActive(false);
     }
-
+    //function for vacuum
     void Vacuum()
     {
         _vacuum.SetActive(true);
         _blueWeapon.SetActive(false);
         _redWeapon.SetActive(false);
+
     }
 
     //shoot function, creates a raycast in front of player, if it hits the "Blue Enemy", that enemy's script is called and it takes damage
@@ -205,7 +245,7 @@ public class CombatScript : MonoBehaviour {
 
             if (target != null && target.tag == "RedEnemy")
             {
-                dustEnemy.transform.position = Vector3.MoveTowards(dustEnemy.transform.position, transform.position, 0.01f);
+                dustEnemy.transform.position = Vector3.MoveTowards(dustEnemy.transform.position, transform.position, 0.08f);
                 //TEMP: Notify on wrong weapon used
             }
             else if (targetGO != null && targetGO.tag == "BlueEnemy")
@@ -214,6 +254,27 @@ public class CombatScript : MonoBehaviour {
             }
             
         }
+    }
+
+    public void Reload()
+    {
+        RaycastHit hit;
+
+        if(Physics.Raycast(transform.position, transform.forward, out hit, 1f))
+        {
+            Debug.Log(hit.transform.name);
+
+            GameObject target = hit.transform.gameObject;
+
+            if(target != null && target.name == "Reload Station")
+            {
+                _reloader.SetActive(true);
+                reloadBar.value = AmmoCount();
+                reloadTimer -= Time.deltaTime;
+            } 
+        }
+        
+        
     }
 
     //TEMP: Coroutine to handle notify text on wrong weapon used for playtest
