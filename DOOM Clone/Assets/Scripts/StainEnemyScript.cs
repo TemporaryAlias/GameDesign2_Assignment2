@@ -21,6 +21,7 @@ public class StainEnemyScript : MonoBehaviour {
         shotTimer = Random.Range(1, 5);
         shotCD = shotTimer;
         startYPos = transform.position;
+        
 	}
 	
 	// Update is called once per frame

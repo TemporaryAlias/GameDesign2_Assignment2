@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerScript : MonoBehaviour {
 
@@ -10,13 +11,14 @@ public class PlayerScript : MonoBehaviour {
     private float dustEnemycount, germEnemycount, stainEnemycount, maxEnemies, currentEnemies;
     
     [SerializeField] float speed;
-
+    private GameObject keyFinder;
     [SerializeField] Slider healthBar;
     [SerializeField] Text remainingEnemies;
     
 
 	// Use this for initialization
 	void Start () {
+        keyFinder = Resources.Load<GameObject>("Rebind");
         _myRb = GetComponent<Rigidbody>();
         
         //locks the cursor, making it unusable
@@ -50,19 +52,19 @@ public class PlayerScript : MonoBehaviour {
             Cursor.lockState = CursorLockMode.None;
         }
 
-        if(yMove > 0 && Input.GetKey(KeyCode.W))
+        if(Input.GetKey(keyFinder.GetComponent<KeyBindsScript>().forward))
         {
             transform.Translate(Vector3.forward * speed);
-        } else if (yMove < 0 && Input.GetKey(KeyCode.S))
+        } else if (Input.GetKey(keyFinder.GetComponent<KeyBindsScript>().back))
         {
             transform.Translate(Vector3.back * speed);
         }
 
-        if(xMove < 0 && (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.Tab)))
+        if((Input.GetKey(keyFinder.GetComponent<KeyBindsScript>().left) || Input.GetKey(KeyCode.Tab)))
         {
             transform.Translate(Vector3.left * speed);
         }
-        else if (xMove > 0 && Input.GetKey(KeyCode.D))
+        else if (Input.GetKey(keyFinder.GetComponent<KeyBindsScript>().right))
         {
             transform.Translate(Vector3.right * speed);
         }
@@ -92,6 +94,7 @@ public class PlayerScript : MonoBehaviour {
     void Die()
     {
         Destroy(gameObject);
+        SceneManager.LoadScene("Menu Scene", LoadSceneMode.Single);
     }
 
     void OnCollisionEnter(Collision collision)

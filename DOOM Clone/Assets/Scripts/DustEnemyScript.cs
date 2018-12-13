@@ -22,6 +22,7 @@ public class DustEnemyScript : MonoBehaviour {
         EnemyRB = GetComponent<Rigidbody>();
 
         navAgent.stoppingDistance = meleeRange;
+        
 	}
 	
 	// Update is called once per frame
@@ -72,10 +73,10 @@ public class DustEnemyScript : MonoBehaviour {
 
 
         //resets enemy y position
-        if(attackCD <= 3.50f)
+        /*if(attackCD <= 3.50f)
         {
             transform.position = new Vector3(transform.position.x, 0, transform.position.z);
-        }
+        }*/
 
        
 	}
@@ -98,7 +99,7 @@ public class DustEnemyScript : MonoBehaviour {
         Player.GetComponent<PlayerScript>().playerHealth -= 1;
 
         //makes enemy jump just to show the attack went through, placeholder anim
-        transform.Translate(new Vector3(0f, 0.2f, 0f));
+        //transform.Translate(new Vector3(0f, 0.2f, 0f));
         
     }
 

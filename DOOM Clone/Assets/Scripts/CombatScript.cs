@@ -17,13 +17,17 @@ public class CombatScript : MonoBehaviour {
     private float cdTimer;
     
     private bool _isRed, _isBlue, _hasAttacked, isSucking, _vaccuumOn;
+    public bool swingHit = false;
     public GameObject _impactEffect;
+    private GameObject keyFinder;
 
     //TEMP: Text to notify if wrong weapon was used
     public Text notifyText;
 
     // Use this for initialization
     void Start () {
+
+        keyFinder = Resources.Load<GameObject>("Rebind");
         playerAnim = GetComponent<Animator>();
         //swordAnim = GetComponentInChildren
         _isBlue = true;
@@ -41,19 +45,19 @@ public class CombatScript : MonoBehaviour {
         dustEnemy = GameObject.FindGameObjectWithTag("RedEnemy");
         //Switches between the two weapon types. Blue Weapon is the shotgun, RedWeapon is the sword/melee
 
-        if (Input.GetAxis("Mouse ScrollWheel") > 0)
+        if (Input.GetAxis("Mouse ScrollWheel") > 0 || Input.GetKeyDown(keyFinder.GetComponent<KeyBindsScript>().ranged))
         {
             BlueWeapon();
             _isBlue = true;
             _isRed = false;
             _vaccuumOn = false;
-        } else if (Input.GetAxis("Mouse ScrollWheel") < 0)
+        } else if (Input.GetAxis("Mouse ScrollWheel") < 0 || Input.GetKeyDown(keyFinder.GetComponent<KeyBindsScript>().melee))
         {
             RedWeapon();
             _isRed = true;
             _isBlue = false;
             _vaccuumOn = false;
-        } else if(Input.GetKeyDown(KeyCode.F))
+        } else if(Input.GetKeyDown(keyFinder.GetComponent<KeyBindsScript>().hoover))
         {
             Vacuum();
             _vaccuumOn = true;
@@ -79,7 +83,7 @@ public class CombatScript : MonoBehaviour {
         {
             _hasAttacked = true;
             //_redEnemy.SetActive(false);
-            swordAnim.SetTrigger("swing");
+            
             
             Swing();
         }
@@ -122,11 +126,11 @@ public class CombatScript : MonoBehaviour {
         if (reloadTimer <= 0 && currentAmmo <= 20)
         {
             currentAmmo += 2;
-            reloadTimer = 1;
+            reloadTimer = 0.5f;
         } else if(currentAmmo >= 20)
         {
             currentAmmo = 20;
-            reloadTimer = 1;
+            reloadTimer = 0.5f;
         }
 
     }
@@ -203,6 +207,7 @@ public class CombatScript : MonoBehaviour {
 
     public void Swing()
     {
+               
         RaycastHit hit;
         if(Physics.Raycast(transform.position, transform.forward, out hit, 150))
         {
@@ -216,17 +221,72 @@ public class CombatScript : MonoBehaviour {
 
             if(target != null && target.tag == "RedEnemy")
             {
-                target.TakeDamage(damage);
+                swingHit = true;
+                
                 //TEMP: Notify on wrong weapon used
-            } else if (targetGO != null && targetGO.tag == "BlueEnemy") {
+            }
+
+            if (targetGO != null && targetGO.tag == "BlueEnemy") {
                 StartCoroutine("WrongWeaponNotify");
             }
 
             if (target2 != null && target2.tag == "Stain Enemy" && target2.stainHealth == 10)
             {
-                target2.TakeDamage(damage);
+                swingHit = true;
+                Invoke("SendDamage2", 0.25f);
+            }
+
+            if (swingHit)
+            {
+                swordAnim.SetTrigger("swing2");
+
+                if (target.tag == "RedEnemy")
+                {
+                    Invoke("SendDamage1", 0.25f);
+                    //target.TakeDamage(damage);
+                }
+
+                if (target2.tag == "Stain Enemy")
+                {
+                    Invoke("SendDamage2", 0.25f);
+                }
+
+                swingHit = false;
             }
         }
+
+        if (swingHit == false)
+        {
+            swordAnim.SetTrigger("swing");
+        }
+       
+    }
+
+    void SendDamage1()
+    {
+        RaycastHit hit;
+
+        if (Physics.Raycast(transform.position, transform.forward, out hit, 150)) {
+
+            DustEnemyScript target = hit.transform.GetComponent<DustEnemyScript>();
+            target.TakeDamage(damage);
+            swingHit = false;
+        }
+        
+    }
+
+    void SendDamage2()
+    {
+        RaycastHit hit;
+
+        if (Physics.Raycast(transform.position, transform.forward, out hit, 150))
+        {
+
+            StainEnemyScript target2 = hit.transform.GetComponent<StainEnemyScript>();
+            target2.TakeDamage(damage);
+            swingHit = false;
+        }
+        
     }
 
     public void SuckemUp()
@@ -286,11 +346,13 @@ public class CombatScript : MonoBehaviour {
         notifyText.text = "";
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider collision)
     {
         if(collision.gameObject.tag == "RedEnemy" && isSucking)
         {
             Destroy(dustEnemy);
         } 
     }
+
+   
 }
