@@ -19,8 +19,8 @@ public class GermEnemyScript : MonoBehaviour {
         navAgent = GetComponent<NavMeshAgent>();
         navAgent.stoppingDistance = rangedAttackDist;
         Player = GameObject.FindGameObjectWithTag("Player");
-        shotTimer = Random.Range(1, 5);
-        shotCD = shotTimer;
+        //shotTimer = Random.Range(1, 5);
+        //shotCD = shotTimer;
     }
 
     private void FixedUpdate()

@@ -16,9 +16,15 @@ public class CombatScript : MonoBehaviour {
     [SerializeField] Slider ammoBar, reloadBar; 
     private float cdTimer;
     
+<<<<<<< HEAD
     private bool _isRed, _isBlue, _hasAttacked, _vaccuumOn;
     public bool swingHit = false, isSucking, canHoover = false;
     public GameObject _impactEffect, hooverBar;
+=======
+    private bool _isRed, _isBlue, _hasAttacked, isSucking, _vaccuumOn;
+    public bool swingHit = false;
+    public GameObject _impactEffect, _dustImpactEffect;
+>>>>>>> 4439ecfb2b7a37b64aebcfc4c6323797869949d6
     private GameObject keyFinder;
     public float staticCount;
     //TEMP: Text to notify if wrong weapon was used
@@ -203,20 +209,26 @@ public class CombatScript : MonoBehaviour {
             {
                 target1.TakeDamage(damage);
                 //TEMP: Notify on wrong weapon used
+                
+                //instantiates a particle system to simulate shot hitting the target, currently not working, no idea why
+                GameObject impactGO = Instantiate(_impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
+                impactGO.GetComponent<ParticleSystem>().Play();
             }
 
             if (target2 != null && target2.tag == "Stain Enemy" && target2.stainHealth > 10)
             {
                 target2.TakeDamage(damage);
+                
+                //instantiates a particle system to simulate shot hitting the target, currently not working, no idea why
+                GameObject impactGO = Instantiate(_impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
+                impactGO.GetComponent<ParticleSystem>().Play();
             }
             else if (targetGO != null && targetGO.tag == "RedEnemy")
             {
                 StartCoroutine("WrongWeaponNotify");
             }
 
-            //instantiates a particle system to simulate shot hitting the target, currently not working, no idea why
-            GameObject impactGO = Instantiate(_impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
-            impactGO.GetComponent<ParticleSystem>().Play();
+            
         }
        
 
@@ -262,12 +274,19 @@ public class CombatScript : MonoBehaviour {
                 if (target.tag == "RedEnemy")
                 {
                     Invoke("SendDamage1", 0.25f);
-                    //target.TakeDamage(damage);
+
+                    //target.TakeDamage(damage);//instantiates a particle system to simulate shot hitting the target, currently not working, no idea why
+                    GameObject impactGO = Instantiate(_dustImpactEffect, hit.point, Quaternion.LookRotation(hit.normal));
+                    impactGO.GetComponent<ParticleSystem>().Play();
                 }
 
-                if (target2.tag == "Stain Enemy")
+                if (target2 != null && target2.tag == "Stain Enemy")
                 {
                     Invoke("SendDamage2", 0.25f);
+                    
+                    //instantiates a particle system to simulate shot hitting the target, currently not working, no idea why
+                    GameObject impactGO = Instantiate(_dustImpactEffect, hit.point, Quaternion.LookRotation(hit.normal));
+                    impactGO.GetComponent<ParticleSystem>().Play();
                 }
 
                 swingHit = false;
