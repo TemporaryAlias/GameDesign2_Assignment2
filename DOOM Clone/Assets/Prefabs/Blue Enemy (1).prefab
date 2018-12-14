@@ -2142,7 +2142,7 @@ MonoBehaviour:
     type: 2}
   projectileSpawnPoint: {fileID: 4610499093952170}
   shotTimer: 0
-  shotCD: 0.7
+  shotCD: 1
   speed: 0.1
   dist: 0
   agroRange: 10

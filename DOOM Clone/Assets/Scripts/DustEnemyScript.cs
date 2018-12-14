@@ -27,8 +27,6 @@ public class DustEnemyScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        transform.LookAt(Player.transform);
-
         float dist = Vector3.Distance(transform.position, Player.transform.position);
 
         if (dist < agroDistance && dist > meleeRange && playerEncountered == false) {
