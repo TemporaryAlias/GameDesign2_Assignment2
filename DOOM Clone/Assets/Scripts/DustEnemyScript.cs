@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class DustEnemyScript : MonoBehaviour {
 
-    private bool _attack, playerEncountered = false;
+    private bool _attack;
     [SerializeField] float agroDistance, meleeRange, attackCD, CDTime;
     [SerializeField] GameObject Player;
     public float EnemyHealth;
@@ -29,15 +29,10 @@ public class DustEnemyScript : MonoBehaviour {
 	void Update () {
         float dist = Vector3.Distance(transform.position, Player.transform.position);
 
-        if (dist < agroDistance && dist > meleeRange && playerEncountered == false) {
+        if (dist < agroDistance && dist > meleeRange) {
             navAgent.SetDestination(Player.transform.position);
-            playerEncountered = true;
         }
 
-        if(playerEncountered)
-        {
-            navAgent.SetDestination(Player.transform.position);
-        }
         //Raycast that constantly checks if player is in melee range, and initiates attack if true
 
         RaycastHit hit;
@@ -54,7 +49,7 @@ public class DustEnemyScript : MonoBehaviour {
 
         //calls the attack function
 
-        if(_attack == true && attackCD == 4 && Player.GetComponent<CombatScript>().isSucking == false)
+        if(_attack == true && attackCD == 4)
         {
             Attack();            
         }

@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class StainEnemyScript : MonoBehaviour {
 
@@ -9,10 +8,8 @@ public class StainEnemyScript : MonoBehaviour {
     [SerializeField] float groundCd, groundTimer, germCd, germTimer, shotTimer, shotCD, agroRange, rangedAttackDist, dist;
     [SerializeField] GameObject GermEnemy, GermSpawn1, GermSpawn2, GermSpawn3, Player, EnemyProjectile;
     [SerializeField] Transform projectileSpawnPoint;
-    private bool goToGround, inGround, createGerm, playerEncountered;
+    private bool goToGround, inGround, createGerm;
     Vector3 startYPos;
-
-    NavMeshAgent navAgent;
 
 
 	// Use this for initialization
@@ -24,9 +21,8 @@ public class StainEnemyScript : MonoBehaviour {
         shotTimer = Random.Range(1, 5);
         shotCD = shotTimer;
         startYPos = transform.position;
-        navAgent = GetComponent<NavMeshAgent>();
-        navAgent.stoppingDistance = rangedAttackDist;
-    }
+        
+	}
 	
 	// Update is called once per frame
 	void FixedUpdate () {
@@ -34,17 +30,6 @@ public class StainEnemyScript : MonoBehaviour {
 
         transform.LookAt(Player.transform);
         dist = Vector3.Distance(transform.position, Player.transform.position);
-
-        if (dist > rangedAttackDist && dist < agroRange && playerEncountered == false)
-        {
-            navAgent.SetDestination(Player.transform.position);
-            playerEncountered = true;
-        }
-
-        if(playerEncountered)
-        {
-            navAgent.SetDestination(Player.transform.position);
-        }
 
         if ((stainHealth == 60 || stainHealth == 30) && inGround == false)
         {

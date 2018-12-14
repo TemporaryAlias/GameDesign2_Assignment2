@@ -12,15 +12,15 @@ public class CombatScript : MonoBehaviour {
     GameObject dustEnemy;
     [SerializeField] ParticleSystem muzzleFlash;
     public float damage = 10f, attackCD;
-    public float maxAmmo, currentAmmo, reloadTimer, hooverTime;
+    public float maxAmmo, currentAmmo, reloadTimer;
     [SerializeField] Slider ammoBar, reloadBar; 
     private float cdTimer;
     
-    private bool _isRed, _isBlue, _hasAttacked, _vaccuumOn;
-    public bool swingHit = false, isSucking, canHoover = false;
-    public GameObject _impactEffect, hooverBar;
+    private bool _isRed, _isBlue, _hasAttacked, isSucking, _vaccuumOn;
+    public bool swingHit = false;
+    public GameObject _impactEffect;
     private GameObject keyFinder;
-    public float staticCount;
+
     //TEMP: Text to notify if wrong weapon was used
     public Text notifyText;
 
@@ -42,7 +42,6 @@ public class CombatScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        
         dustEnemy = GameObject.FindGameObjectWithTag("RedEnemy");
         //Switches between the two weapon types. Blue Weapon is the shotgun, RedWeapon is the sword/melee
 
@@ -58,7 +57,7 @@ public class CombatScript : MonoBehaviour {
             _isRed = true;
             _isBlue = false;
             _vaccuumOn = false;
-        } else if(Input.GetKeyDown(keyFinder.GetComponent<KeyBindsScript>().hoover)/* && canHoover == true*/)
+        } else if(Input.GetKeyDown(keyFinder.GetComponent<KeyBindsScript>().hoover))
         {
             Vacuum();
             _vaccuumOn = true;
@@ -73,7 +72,6 @@ public class CombatScript : MonoBehaviour {
         {
             currentAmmo -= 1;
             _hasAttacked = true;
-            //staticCount += 2;
             //_blueEnemy.SetActive(false);
             gunAnim.SetTrigger("Shoot");
             Shoot();
@@ -84,30 +82,20 @@ public class CombatScript : MonoBehaviour {
         else if (_isRed && Input.GetMouseButtonDown(0) && _hasAttacked == false && isSucking == false)
         {
             _hasAttacked = true;
-            //staticCount += 2;
             //_redEnemy.SetActive(false);
-
-
+            
+            
             Swing();
         }
 
-        if(Input.GetMouseButton(0) && _vaccuumOn == true)
+        if(Input.GetMouseButton(0) && _vaccuumOn == true && isSucking == false)
         {
-            
             isSucking = true;
             SuckemUp();
         } else
         {
-            //hooverBar.SetActive(false);
             isSucking = false;
         }
-
-        /*if(isSucking)
-        {
-            hooverBar.SetActive(true);
-            staticCount -= 1;
-            //hooverBar.value = hooverTime;
-        }*/ 
 
         //Starts the cooldown timer once Shoot function has been called
 
@@ -145,13 +133,6 @@ public class CombatScript : MonoBehaviour {
             reloadTimer = 0.5f;
         }
 
-        /*if( canHoover == false)
-        {
-            
-            canHoover = true;
-        }*/
-
-        
     }
 
     float AmmoCount()
@@ -324,26 +305,15 @@ public class CombatScript : MonoBehaviour {
 
             if (target != null && target.tag == "RedEnemy")
             {
-                target.transform.position = Vector3.MoveTowards(target.transform.position, transform.position, 0.5f);
+                dustEnemy.transform.position = Vector3.MoveTowards(dustEnemy.transform.position, transform.position, 0.08f);
                 //TEMP: Notify on wrong weapon used
             }
             else if (targetGO != null && targetGO.tag == "BlueEnemy")
             {
                 StartCoroutine("WrongWeaponNotify");
             }
-
-            float dist = Vector3.Distance(transform.position, target.transform.position);
-
-            //dustEnemy = target;
-            if(dist < 5 && isSucking)
-            {
-                Destroy(target.gameObject);
-            }
+            
         }
-
-        hooverBar.SetActive(true);
-        staticCount -= 1;
-        //hooverBar.value = hooverTime;
     }
 
     public void Reload()
@@ -376,25 +346,12 @@ public class CombatScript : MonoBehaviour {
         notifyText.text = "";
     }
 
-    public void OnTriggerEnter(Collider collision)
+    private void OnTriggerEnter(Collider collision)
     {
-        RaycastHit hit;
-
-        if (Physics.Raycast(transform.position, transform.forward, out hit))
+        if(collision.gameObject.tag == "RedEnemy" && isSucking)
         {
-            Debug.Log(hit.transform.name);
-
-            DustEnemyScript target = hit.transform.GetComponent<DustEnemyScript>();
-            StainEnemyScript target2 = hit.transform.GetComponent<StainEnemyScript>();
-
-            if (collision.gameObject == target && isSucking)
-            {
-                Destroy(target);
-            }
-
-
-        }
-        
+            Destroy(dustEnemy);
+        } 
     }
 
    
