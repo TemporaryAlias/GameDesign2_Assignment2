@@ -11,7 +11,7 @@ public class GermEnemyScript : MonoBehaviour {
     [SerializeField] GameObject Player, EnemyProjectile;
     [SerializeField] Transform projectileSpawnPoint;
     [SerializeField] float shotTimer, shotCD, speed, dist, agroRange, rangedAttackDist;
-
+    private bool playerEncountered;
     NavMeshAgent navAgent;
 
     private void Start()
@@ -29,9 +29,15 @@ public class GermEnemyScript : MonoBehaviour {
 
         dist = Vector3.Distance(transform.position, Player.transform.position);
         
-        if(dist > rangedAttackDist && dist < agroRange) {
+        if(dist > rangedAttackDist && dist < agroRange && playerEncountered == false) {
             navAgent.SetDestination(Player.transform.position);
+            playerEncountered = true;
         } 
+
+        if(playerEncountered)
+        {
+            navAgent.SetDestination(Player.transform.position);
+        }
 
         if (shotTimer > 0)
         {
