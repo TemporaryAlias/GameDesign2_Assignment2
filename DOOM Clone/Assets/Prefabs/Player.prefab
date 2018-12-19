@@ -7681,6 +7681,9 @@ MonoBehaviour:
   isSucking: 0
   _impactEffect: {fileID: 1630802259468876, guid: b1e2357bd0c40d942a69ab21373e402d,
     type: 3}
+  dustImpactEffect: {fileID: 0}
+  shootRange: 18
+  meleeRange: 6
   notifyText: {fileID: 0}
 --- !u!195 &195323928373219950
 NavMeshAgent:

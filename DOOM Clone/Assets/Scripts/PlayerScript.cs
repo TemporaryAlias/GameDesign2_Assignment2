@@ -70,7 +70,7 @@ public class PlayerScript : MonoBehaviour {
         }
 
         healthBar.value = CalculateHealth();
-        remainingEnemies.text = "Enemies Remaining: " + EnemyCount().ToString();
+        remainingEnemies.text = "Remaining:\n" + EnemyCount().ToString();
 
         if (playerHealth <= 0)
         {

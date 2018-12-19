@@ -12,14 +12,16 @@ public class CombatScript : MonoBehaviour {
     GameObject dustEnemy;
     [SerializeField] ParticleSystem muzzleFlash;
     public float damage = 10f, attackCD;
-    public float maxAmmo, currentAmmo, reloadTimer, suckTimer = 3, staticForce = 0;
-    [SerializeField] Slider ammoBar, reloadBar; 
+    public float maxAmmo, currentAmmo, reloadTimer, suckTimer = 3, staticForce = 0, maxStatic;
+    [SerializeField] Slider ammoBar, reloadBar, vacBar; 
     private float cdTimer;
     
     private bool _isRed, _isBlue, _hasAttacked, _vaccuumOn, canHoover;
     public bool swingHit = false, isSucking;
     public GameObject _impactEffect, dustImpactEffect;
     private GameObject keyFinder;
+
+    [SerializeField] float shootRange, meleeRange;
 
     //TEMP: Text to notify if wrong weapon was used
     public Text notifyText;
@@ -34,6 +36,9 @@ public class CombatScript : MonoBehaviour {
         cdTimer = attackCD;
         currentAmmo = maxAmmo;
         ammoBar.value = AmmoCount();
+
+        vacBar.maxValue = maxStatic;
+        vacBar.value = 0;
         
         //TEMP: Set notify text to nothing
         notifyText.text = "";
@@ -115,6 +120,8 @@ public class CombatScript : MonoBehaviour {
 
         ammoBar.value = AmmoCount();
 
+        vacBar.value = staticForce;
+
         if(Input.GetKey(KeyCode.E))
         {
             Reload();
@@ -134,7 +141,7 @@ public class CombatScript : MonoBehaviour {
             reloadTimer = 0.5f;
         }
 
-        if(staticForce >= 8)
+        if(staticForce >= maxStatic)
         {
             canHoover = true;
         }
@@ -186,7 +193,7 @@ public class CombatScript : MonoBehaviour {
     {
         muzzleFlash.Play();
         RaycastHit hit;
-        if(Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit))
+        if(Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootRange))
         {
             Debug.Log(hit.transform.name);
 
@@ -231,7 +238,7 @@ public class CombatScript : MonoBehaviour {
     {
                
         RaycastHit hit;
-        if(Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 150))
+        if(Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, meleeRange))
         {
             Debug.Log(hit.transform.name);
 

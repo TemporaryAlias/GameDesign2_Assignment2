@@ -13,7 +13,7 @@ public class GermEnemyScript : MonoBehaviour {
     [SerializeField] float shotTimer, shotCD, speed, dist, agroRange, rangedAttackDist;
     [SerializeField] bool isAggro;
     NavMeshAgent navAgent;
-    [SerializeField] Animator bodyAnim, leftArmAnim, rightArmAnim, mouthAnim;
+    [SerializeField] Animator bodyAnim, leftArmAnim, rightArmAnim, mouthAnim, feetAnim;
 
     private void Start()
     {
@@ -38,6 +38,7 @@ public class GermEnemyScript : MonoBehaviour {
         if(isAggro)
         {
             navAgent.SetDestination(Player.transform.position);
+            feetAnim.SetBool("Moving", true);
         }
 
         if (shotTimer > 0)
