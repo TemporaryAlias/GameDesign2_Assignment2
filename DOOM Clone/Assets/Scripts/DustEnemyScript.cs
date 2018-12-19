@@ -31,6 +31,8 @@ public class DustEnemyScript : MonoBehaviour {
         anim.SetBool("Chasing", isAggro);
         anim.SetBool("nearPlayer", nearPlayer);
 
+        transform.LookAt(Player.transform);
+
         float dist = Vector3.Distance(transform.position, Player.transform.position);
 
         if (dist < agroDistance && dist > meleeRange) {

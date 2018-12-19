@@ -259,13 +259,13 @@ public class CombatScript : MonoBehaviour {
             {
                 swordAnim.SetTrigger("swing2");
 
-                if (target.tag == "RedEnemy")
+                if (target != null && target.tag == "RedEnemy")
                 {
                     Invoke("SendDamage1", 0.25f);
                     //target.TakeDamage(damage);
                 }
 
-                if (target2.tag == "Stain Enemy")
+                if (target2 != null && target2.tag == "Stain Enemy")
                 {
                     Invoke("SendDamage2", 0.25f);
                 }
