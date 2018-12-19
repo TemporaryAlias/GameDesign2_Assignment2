@@ -103,6 +103,8 @@ public class DustEnemyScript : MonoBehaviour {
     public void TakeDamage(float dmg)
     {
         EnemyHealth -= dmg;
+        transform.localScale = new Vector3((float)(transform.localScale.x * 0.75), (float)(transform.localScale.y * 0.75), (float)(transform.localScale.z * 0.75));
+
         if (EnemyHealth <= 0f)
         {
             Die();

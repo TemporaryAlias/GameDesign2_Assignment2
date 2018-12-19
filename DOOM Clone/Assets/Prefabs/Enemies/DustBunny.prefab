@@ -775,7 +775,7 @@ MonoBehaviour:
   attackCD: 4
   CDTime: 2
   Player: {fileID: 0}
-  EnemyHealth: 20
+  EnemyHealth: 30
   anim: {fileID: 6029045346632946737}
 --- !u!195 &784041506
 NavMeshAgent:
