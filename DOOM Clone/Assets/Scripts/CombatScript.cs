@@ -12,12 +12,12 @@ public class CombatScript : MonoBehaviour {
     GameObject dustEnemy;
     [SerializeField] ParticleSystem muzzleFlash;
     public float damage = 10f, attackCD;
-    public float maxAmmo, currentAmmo, reloadTimer;
+    public float maxAmmo, currentAmmo, reloadTimer, suckTimer = 3, staticForce = 0;
     [SerializeField] Slider ammoBar, reloadBar; 
     private float cdTimer;
     
-    private bool _isRed, _isBlue, _hasAttacked, isSucking, _vaccuumOn;
-    public bool swingHit = false;
+    private bool _isRed, _isBlue, _hasAttacked, _vaccuumOn, canHoover;
+    public bool swingHit = false, isSucking;
     public GameObject _impactEffect;
     private GameObject keyFinder;
 
@@ -57,7 +57,7 @@ public class CombatScript : MonoBehaviour {
             _isRed = true;
             _isBlue = false;
             _vaccuumOn = false;
-        } else if(Input.GetKeyDown(keyFinder.GetComponent<KeyBindsScript>().hoover))
+        } else if(Input.GetKeyDown(keyFinder.GetComponent<KeyBindsScript>().hoover) && canHoover)
         {
             Vacuum();
             _vaccuumOn = true;
@@ -91,6 +91,7 @@ public class CombatScript : MonoBehaviour {
         if(Input.GetMouseButton(0) && _vaccuumOn == true && isSucking == false)
         {
             isSucking = true;
+            suckTimer -= Time.deltaTime;
             SuckemUp();
         } else
         {
@@ -133,6 +134,21 @@ public class CombatScript : MonoBehaviour {
             reloadTimer = 0.5f;
         }
 
+        if(staticForce >= 8)
+        {
+            canHoover = true;
+        }
+
+        if(suckTimer <= 0)
+        {
+            canHoover = false;
+            staticForce = 0;
+            suckTimer = 3;
+            BlueWeapon();
+            _isBlue = true;
+            _isRed = false;
+            _vaccuumOn = false;
+        }
     }
 
     float AmmoCount()
@@ -182,12 +198,14 @@ public class CombatScript : MonoBehaviour {
 
             if (target1 != null && target1.tag == "BlueEnemy")
             {
+                staticForce += 1;
                 target1.TakeDamage(damage);
                 //TEMP: Notify on wrong weapon used
             }
 
             if (target2 != null && target2.tag == "Stain Enemy" && target2.stainHealth > 10)
             {
+                staticForce += 1;
                 target2.TakeDamage(damage);
             }
             else if (targetGO != null && targetGO.tag == "RedEnemy")
@@ -221,6 +239,7 @@ public class CombatScript : MonoBehaviour {
 
             if(target != null && target.tag == "RedEnemy")
             {
+                staticForce += 1;
                 swingHit = true;
                 
                 //TEMP: Notify on wrong weapon used
@@ -299,16 +318,23 @@ public class CombatScript : MonoBehaviour {
 
             DustEnemyScript target = hit.transform.GetComponent<DustEnemyScript>();
             StainEnemyScript target2 = hit.transform.GetComponent<StainEnemyScript>();
+            GermEnemyScript target3 = hit.transform.GetComponent<GermEnemyScript>();
 
             //TEMP: Get targets gameobject to test if wrong weapon used
             GameObject targetGO = hit.transform.gameObject;
 
             if (target != null && target.tag == "RedEnemy")
             {
-                dustEnemy.transform.position = Vector3.MoveTowards(dustEnemy.transform.position, transform.position, 0.08f);
+                target.transform.position = Vector3.MoveTowards(target.transform.position, transform.position, 0.8f);
                 //TEMP: Notify on wrong weapon used
             }
-            else if (targetGO != null && targetGO.tag == "BlueEnemy")
+
+            if( target3 != null && target3.tag == "BlueEnemy")
+            {
+                target3.transform.position = Vector3.MoveTowards(target3.transform.position, transform.position, 0.8f);
+            }
+
+            if (targetGO != null && targetGO.tag == "BlueEnemy")
             {
                 StartCoroutine("WrongWeaponNotify");
             }
@@ -346,13 +372,13 @@ public class CombatScript : MonoBehaviour {
         notifyText.text = "";
     }
 
-    private void OnTriggerEnter(Collider collision)
+    /*private void OnTriggerEnter(Collider collision)
     {
         if(collision.gameObject.tag == "RedEnemy" && isSucking)
         {
             Destroy(dustEnemy);
         } 
-    }
+    }*/
 
    
 }

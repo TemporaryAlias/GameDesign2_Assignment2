@@ -100,7 +100,7 @@ public class PlayerScript : MonoBehaviour {
     void OnCollisionEnter(Collision collision)
     {
         
-        if (collision.gameObject.tag == "EnemyProjectile")
+        if (collision.gameObject.tag == "EnemyProjectile" && GetComponent<CombatScript>().isSucking == false)
         {
             Debug.Log("hit");
             playerHealth -= 1;

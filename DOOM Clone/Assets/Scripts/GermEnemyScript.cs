@@ -11,8 +11,9 @@ public class GermEnemyScript : MonoBehaviour {
     [SerializeField] GameObject Player, EnemyProjectile;
     [SerializeField] Transform projectileSpawnPoint;
     [SerializeField] float shotTimer, shotCD, speed, dist, agroRange, rangedAttackDist;
-
+    [SerializeField] bool isAggro;
     NavMeshAgent navAgent;
+    [SerializeField] Animator bodyAnim, leftArmAnim, rightArmAnim, mouthAnim;
 
     private void Start()
     {
@@ -25,13 +26,19 @@ public class GermEnemyScript : MonoBehaviour {
 
     private void FixedUpdate()
     {
+        
         transform.LookAt(Player.transform);
 
         dist = Vector3.Distance(transform.position, Player.transform.position);
         
         if(dist > rangedAttackDist && dist < agroRange) {
-            navAgent.SetDestination(Player.transform.position);
+            isAggro = true;
         } 
+
+        if(isAggro)
+        {
+            navAgent.SetDestination(Player.transform.position);
+        }
 
         if (shotTimer > 0)
         {
@@ -41,6 +48,7 @@ public class GermEnemyScript : MonoBehaviour {
         if (dist <= rangedAttackDist && shotTimer <= 0)
         {
             //Instantiate(EnemyProjectile, new Vector3(transform.position.x, transform.position.y + 150, transform.position.z),transform.rotation);
+            mouthAnim.SetTrigger("Attack");
             Instantiate(EnemyProjectile, projectileSpawnPoint.position, transform.rotation);
             shotTimer = shotCD;
         }
@@ -73,6 +81,14 @@ public class GermEnemyScript : MonoBehaviour {
         Gizmos.color = Color.red;
 
         Gizmos.DrawWireSphere(transform.position, rangedAttackDist);
+    }
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        if (collision.gameObject.tag == "Player" && Player.GetComponent<CombatScript>().isSucking)
+        {
+            Destroy(this.gameObject);
+        }
     }
 
 }

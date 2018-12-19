@@ -5,19 +5,19 @@ using UnityEngine.AI;
 
 public class DustEnemyScript : MonoBehaviour {
 
-    private bool _attack;
+    private bool _attack, isAggro, nearPlayer;
     [SerializeField] float agroDistance, meleeRange, attackCD, CDTime;
     [SerializeField] GameObject Player;
     public float EnemyHealth;
     private Rigidbody EnemyRB;
-
+    [SerializeField] Animator anim;
     NavMeshAgent navAgent;
 
 	// Use this for initialization
 	void Start () {
         navAgent = GetComponent<NavMeshAgent>();
-
-        attackCD = 4;
+        
+        attackCD = 2;
         CDTime = attackCD;
         EnemyRB = GetComponent<Rigidbody>();
 
@@ -27,10 +27,27 @@ public class DustEnemyScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+        anim.SetBool("Chasing", isAggro);
+        anim.SetBool("nearPlayer", nearPlayer);
+
         float dist = Vector3.Distance(transform.position, Player.transform.position);
 
         if (dist < agroDistance && dist > meleeRange) {
+            isAggro = true;
+        }
+
+        if(isAggro)
+        {            
             navAgent.SetDestination(Player.transform.position);
+        }
+
+        if(dist == meleeRange)
+        {
+            nearPlayer = true;
+        } else
+        {
+            nearPlayer = false;
         }
 
         //Raycast that constantly checks if player is in melee range, and initiates attack if true
@@ -49,8 +66,9 @@ public class DustEnemyScript : MonoBehaviour {
 
         //calls the attack function
 
-        if(_attack == true && attackCD == 4)
+        if(_attack == true && attackCD <= 0 && Player.GetComponent<CombatScript>().isSucking == false)
         {
+            anim.SetTrigger("Attack");
             Attack();            
         }
 
@@ -64,11 +82,9 @@ public class DustEnemyScript : MonoBehaviour {
         
         //resets attack
 
-        if(attackCD <= 0)
+        if(attackCD >= 0)
         {
             _attack = false;
-            attackCD = 4;
-            
         }
 
 
@@ -97,10 +113,11 @@ public class DustEnemyScript : MonoBehaviour {
     {
         Debug.Log("PLayerHit");
         Player.GetComponent<PlayerScript>().playerHealth -= 1;
+        attackCD = 4;
 
         //makes enemy jump just to show the attack went through, placeholder anim
         //transform.Translate(new Vector3(0f, 0.2f, 0f));
-        
+
     }
 
     void Die()
@@ -117,5 +134,13 @@ public class DustEnemyScript : MonoBehaviour {
         Gizmos.color = Color.red;
 
         Gizmos.DrawWireSphere(transform.position, meleeRange);
+    }
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        if (collision.gameObject.tag == "Player" && Player.GetComponent<CombatScript>().isSucking)
+        {
+            Destroy(this.gameObject);
+        }
     }
 }
