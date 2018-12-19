@@ -18,7 +18,7 @@ public class CombatScript : MonoBehaviour {
     
     private bool _isRed, _isBlue, _hasAttacked, _vaccuumOn, canHoover;
     public bool swingHit = false, isSucking;
-    public GameObject _impactEffect;
+    public GameObject _impactEffect, dustImpactEffect;
     private GameObject keyFinder;
 
     //TEMP: Text to notify if wrong weapon was used
@@ -186,7 +186,7 @@ public class CombatScript : MonoBehaviour {
     {
         muzzleFlash.Play();
         RaycastHit hit;
-        if(Physics.Raycast(transform.position, transform.forward, out hit))
+        if(Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit))
         {
             Debug.Log(hit.transform.name);
 
@@ -201,21 +201,25 @@ public class CombatScript : MonoBehaviour {
                 staticForce += 1;
                 target1.TakeDamage(damage);
                 //TEMP: Notify on wrong weapon used
+                
+                GameObject impactGO = Instantiate(_impactEffect, hit.point, _impactEffect.transform.rotation);
+                impactGO.GetComponent<ParticleSystem>().Play();
             }
 
             if (target2 != null && target2.tag == "Stain Enemy" && target2.stainHealth > 10)
             {
                 staticForce += 1;
                 target2.TakeDamage(damage);
+                
+                GameObject impactGO = Instantiate(_impactEffect, hit.point, _impactEffect.transform.rotation);
+                impactGO.GetComponent<ParticleSystem>().Play();
             }
             else if (targetGO != null && targetGO.tag == "RedEnemy")
             {
                 StartCoroutine("WrongWeaponNotify");
             }
 
-            //instantiates a particle system to simulate shot hitting the target, currently not working, no idea why
-            GameObject impactGO = Instantiate(_impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
-            impactGO.GetComponent<ParticleSystem>().Play();
+            
         }
        
 
@@ -227,7 +231,7 @@ public class CombatScript : MonoBehaviour {
     {
                
         RaycastHit hit;
-        if(Physics.Raycast(transform.position, transform.forward, out hit, 150))
+        if(Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 150))
         {
             Debug.Log(hit.transform.name);
 
@@ -262,12 +266,17 @@ public class CombatScript : MonoBehaviour {
                 if (target != null && target.tag == "RedEnemy")
                 {
                     Invoke("SendDamage1", 0.25f);
-                    //target.TakeDamage(damage);
+
+                    GameObject impactGO = Instantiate(dustImpactEffect, hit.point, dustImpactEffect.transform.rotation);
+                    impactGO.GetComponent<ParticleSystem>().Play();
                 }
 
                 if (target2 != null && target2.tag == "Stain Enemy")
                 {
                     Invoke("SendDamage2", 0.25f);
+
+                    GameObject impactGO = Instantiate(dustImpactEffect, hit.point, dustImpactEffect.transform.rotation);
+                    impactGO.GetComponent<ParticleSystem>().Play();
                 }
 
                 swingHit = false;
