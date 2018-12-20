@@ -19,6 +19,7 @@ public class LevelManager : MonoBehaviour
     public UIHandler uiHandler;
 
     PlayerScript player;
+    MouseMovementScript playerMouse;
 
     void Start() {
         SceneManager.sceneLoaded += OnSceneLoad;
@@ -36,8 +37,9 @@ public class LevelManager : MonoBehaviour
     void OnSceneLoad(Scene scene, LoadSceneMode mode) {
         uiHandler = FindObjectOfType<UIHandler>();
         player = FindObjectOfType<PlayerScript>();
+        playerMouse = FindObjectOfType<MouseMovementScript>();
 
-        if (player != null) {
+        if (player != null || playerMouse != null) {
             Cursor.lockState = CursorLockMode.Locked;
         } else {
             Cursor.lockState = CursorLockMode.None;

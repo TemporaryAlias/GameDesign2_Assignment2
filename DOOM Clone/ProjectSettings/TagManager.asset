@@ -11,6 +11,8 @@ TagManager:
   - Wall
   - Stain Enemy
   - Fire
+  - Keybind
+  - KeyText
   layers:
   - Default
   - TransparentFX

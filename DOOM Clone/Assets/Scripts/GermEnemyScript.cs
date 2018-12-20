@@ -88,7 +88,7 @@ public class GermEnemyScript : MonoBehaviour {
 
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.gameObject.tag == "Player" && Player.GetComponent<CombatScript>().isSucking)
+        if (collision.gameObject.tag == "Player" && (Player.GetComponent<CombatScript>().isSucking || Player.GetComponent<MouseCombatScript>().isSucking))
         {
             Destroy(this.gameObject);
         }

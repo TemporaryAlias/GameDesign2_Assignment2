@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1548,6 +1548,24 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 249313775}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &253352996 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 147708445, guid: 3fb9dee04e1e61443971d0db66068481,
+    type: 3}
+  m_PrefabInstance: {fileID: 2040637264}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &301361533 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 111681735, guid: 3fb9dee04e1e61443971d0db66068481,
+    type: 3}
+  m_PrefabInstance: {fileID: 2040637264}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &301361536 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 111681738, guid: 3fb9dee04e1e61443971d0db66068481,
+    type: 3}
+  m_PrefabInstance: {fileID: 2040637264}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &309979041
 GameObject:
   m_ObjectHideFlags: 0
@@ -2746,6 +2764,14 @@ PrefabInstance:
       propertyPath: Player
       value: 
       objectReference: {fileID: 2090399608}
+    - target: {fileID: 784041507, guid: 1c95f12ddc1d4b84ca23bd2c8c080f8e, type: 3}
+      propertyPath: attackCD
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 784041507, guid: 1c95f12ddc1d4b84ca23bd2c8c080f8e, type: 3}
+      propertyPath: meleeRange
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 1586767555076971837, guid: 1c95f12ddc1d4b84ca23bd2c8c080f8e,
         type: 3}
       propertyPath: m_LocalPosition.y
@@ -4369,6 +4395,14 @@ PrefabInstance:
       propertyPath: Player
       value: 
       objectReference: {fileID: 2090399608}
+    - target: {fileID: 784041507, guid: 1c95f12ddc1d4b84ca23bd2c8c080f8e, type: 3}
+      propertyPath: attackCD
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 784041507, guid: 1c95f12ddc1d4b84ca23bd2c8c080f8e, type: 3}
+      propertyPath: meleeRange
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1c95f12ddc1d4b84ca23bd2c8c080f8e, type: 3}
 --- !u!1 &907476031
@@ -5424,6 +5458,14 @@ PrefabInstance:
       propertyPath: Player
       value: 
       objectReference: {fileID: 2090399608}
+    - target: {fileID: 784041507, guid: 1c95f12ddc1d4b84ca23bd2c8c080f8e, type: 3}
+      propertyPath: attackCD
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 784041507, guid: 1c95f12ddc1d4b84ca23bd2c8c080f8e, type: 3}
+      propertyPath: meleeRange
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1c95f12ddc1d4b84ca23bd2c8c080f8e, type: 3}
 --- !u!1 &1109528676
@@ -6055,6 +6097,14 @@ PrefabInstance:
       propertyPath: Player
       value: 
       objectReference: {fileID: 2090399608}
+    - target: {fileID: 784041507, guid: 1c95f12ddc1d4b84ca23bd2c8c080f8e, type: 3}
+      propertyPath: attackCD
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 784041507, guid: 1c95f12ddc1d4b84ca23bd2c8c080f8e, type: 3}
+      propertyPath: meleeRange
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1c95f12ddc1d4b84ca23bd2c8c080f8e, type: 3}
 --- !u!1 &1377649124
@@ -6864,6 +6914,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1522924827}
   m_Mesh: {fileID: 4300026, guid: ec40b66161fcdf5458ccee83032f58c3, type: 3}
+--- !u!1 &1561408944 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2110549795, guid: 3fb9dee04e1e61443971d0db66068481,
+    type: 3}
+  m_PrefabInstance: {fileID: 2040637264}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1561408946 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 2110549797, guid: 3fb9dee04e1e61443971d0db66068481,
+    type: 3}
+  m_PrefabInstance: {fileID: 2040637264}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1578274880
 GameObject:
   m_ObjectHideFlags: 0
@@ -9765,6 +9827,10 @@ PrefabInstance:
       propertyPath: remainingEnemies
       value: 
       objectReference: {fileID: 872749306}
+    - target: {fileID: 2090399611, guid: 3fb9dee04e1e61443971d0db66068481, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2090399610, guid: 3fb9dee04e1e61443971d0db66068481, type: 3}
       propertyPath: _reloader
       value: 
@@ -9785,6 +9851,14 @@ PrefabInstance:
       propertyPath: notifyText
       value: 
       objectReference: {fileID: 2137545845}
+    - target: {fileID: 2090399610, guid: 3fb9dee04e1e61443971d0db66068481, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2090399610, guid: 3fb9dee04e1e61443971d0db66068481, type: 3}
+      propertyPath: suckTimer
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3fb9dee04e1e61443971d0db66068481, type: 3}
 --- !u!1 &2052539272
@@ -9943,12 +10017,81 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2070868207}
   m_CullTransparentMesh: 0
+--- !u!198 &2087632926 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 1839824256, guid: 3fb9dee04e1e61443971d0db66068481,
+    type: 3}
+  m_PrefabInstance: {fileID: 2040637264}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2090399608 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2090399608, guid: 3fb9dee04e1e61443971d0db66068481,
     type: 3}
   m_PrefabInstance: {fileID: 2040637264}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2090399609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2090399608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2050883a71ff40c44bebcba45db99c98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  swordAnim: {fileID: 1561408946}
+  gunAnim: {fileID: 301361536}
+  _blueWeapon: {fileID: 301361533}
+  _redWeapon: {fileID: 1561408944}
+  _redEnemy: {fileID: 0}
+  _blueEnemy: {fileID: 0}
+  _vacuum: {fileID: 253352996}
+  _reloader: {fileID: 635385784}
+  muzzleFlash: {fileID: 2087632926}
+  damage: 10
+  attackCD: 0.7
+  maxAmmo: 20
+  currentAmmo: 20
+  reloadTimer: 0.5
+  suckTimer: 1
+  staticForce: 0
+  maxStatic: 8
+  ammoBar: {fileID: 1435298044}
+  reloadBar: {fileID: 635385786}
+  vacBar: {fileID: 1917815739}
+  swingHit: 0
+  isSucking: 0
+  melee: 0
+  _impactEffect: {fileID: 1630802259468876, guid: b1e2357bd0c40d942a69ab21373e402d,
+    type: 3}
+  dustImpactEffect: {fileID: 8058556914033482402, guid: 785af9b1582b1744b9d875df4ca66f83,
+    type: 3}
+  shootRange: 18
+  meleeRange: 6
+  player: {fileID: 2090399618}
+  notifyText: {fileID: 2137545845}
+--- !u!114 &2090399618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2090399608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcd3b347949e8314391b783d2e66a766, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerHealth: 5
+  maxHealth: 5
+  speed: 0.2
+  forBack: 0
+  healthBar: {fileID: 599114976}
+  remainingEnemies: {fileID: 872749306}
+  dead: 0
+  movingLeft: 0
 --- !u!1 &2092806580
 GameObject:
   m_ObjectHideFlags: 0
@@ -10387,6 +10530,11 @@ PrefabInstance:
       propertyPath: Player
       value: 
       objectReference: {fileID: 2090399608}
+    - target: {fileID: 377648956837052082, guid: ec1a944d22330cc4e8798cfe9a277c45,
+        type: 3}
+      propertyPath: stainHealth
+      value: 80
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ec1a944d22330cc4e8798cfe9a277c45, type: 3}
 --- !u!1001 &8469956665128700907
