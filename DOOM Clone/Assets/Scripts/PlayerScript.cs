@@ -14,6 +14,8 @@ public class PlayerScript : MonoBehaviour {
     private GameObject keyFinder;
     [SerializeField] Slider healthBar;
     [SerializeField] Text remainingEnemies;
+
+    public bool dead;
     
 
 	// Use this for initialization
@@ -38,45 +40,49 @@ public class PlayerScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        //simple movement script, will need to be tweaked later on to accomodate for player key binding.
+        if (!dead) {
 
-        var xMove = Input.GetAxis("Horizontal");
-        var yMove = Input.GetAxis("Vertical");
+            //simple movement script, will need to be tweaked later on to accomodate for player key binding.
 
-        //var movement = new Vector3(xMove, 0, yMove);
+            var xMove = Input.GetAxis("Horizontal");
+            var yMove = Input.GetAxis("Vertical");
 
-        
-        //unlocks the cursor
-        if(Input.GetKeyDown(KeyCode.Escape))
-        {
-            Cursor.lockState = CursorLockMode.None;
+            //var movement = new Vector3(xMove, 0, yMove);
+
+
+            //unlocks the cursor
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                Cursor.lockState = CursorLockMode.None;
+            }
+
+            if (Input.GetKey(keyFinder.GetComponent<KeyBindsScript>().forward))
+            {
+                transform.Translate(Vector3.forward * speed);
+            } else if (Input.GetKey(keyFinder.GetComponent<KeyBindsScript>().back))
+            {
+                transform.Translate(Vector3.back * speed);
+            }
+
+            if ((Input.GetKey(keyFinder.GetComponent<KeyBindsScript>().left) || Input.GetKey(KeyCode.Tab)))
+            {
+                transform.Translate(Vector3.left * speed);
+            }
+            else if (Input.GetKey(keyFinder.GetComponent<KeyBindsScript>().right))
+            {
+                transform.Translate(Vector3.right * speed);
+            }
+
+            healthBar.value = CalculateHealth();
+            remainingEnemies.text = "Remaining:\n" + EnemyCount().ToString();
+
+            if (playerHealth <= 0)
+            {
+                Die();
+            }
+
         }
 
-        if(Input.GetKey(keyFinder.GetComponent<KeyBindsScript>().forward))
-        {
-            transform.Translate(Vector3.forward * speed);
-        } else if (Input.GetKey(keyFinder.GetComponent<KeyBindsScript>().back))
-        {
-            transform.Translate(Vector3.back * speed);
-        }
-
-        if((Input.GetKey(keyFinder.GetComponent<KeyBindsScript>().left) || Input.GetKey(KeyCode.Tab)))
-        {
-            transform.Translate(Vector3.left * speed);
-        }
-        else if (Input.GetKey(keyFinder.GetComponent<KeyBindsScript>().right))
-        {
-            transform.Translate(Vector3.right * speed);
-        }
-
-        healthBar.value = CalculateHealth();
-        remainingEnemies.text = "Remaining:\n" + EnemyCount().ToString();
-
-        if (playerHealth <= 0)
-        {
-            Die();
-        }
-       
     }
 
     float CalculateHealth()
@@ -91,10 +97,11 @@ public class PlayerScript : MonoBehaviour {
         germEnemycount = GameObject.FindGameObjectsWithTag("BlueEnemy").Length;
         return (dustEnemycount + germEnemycount + stainEnemycount);
     }
+
     void Die()
     {
-        Destroy(gameObject);
-        SceneManager.LoadScene("Menu Scene", LoadSceneMode.Single);
+        dead = true;
+        LevelManager.instance.uiHandler.StartFadeOut(0);
     }
 
     void OnCollisionEnter(Collision collision)

@@ -18,9 +18,10 @@ public class LevelManager : MonoBehaviour
 
     public UIHandler uiHandler;
 
-    void Start()
-    {
-        
+    PlayerScript player;
+
+    void Start() {
+        SceneManager.sceneLoaded += OnSceneLoad;
     }
     
     void Update()
@@ -30,6 +31,17 @@ public class LevelManager : MonoBehaviour
     
     public void ChangeScene(int newSceneIndex) {
         SceneManager.LoadScene(newSceneIndex);
+    }
+
+    void OnSceneLoad(Scene scene, LoadSceneMode mode) {
+        uiHandler = FindObjectOfType<UIHandler>();
+        player = FindObjectOfType<PlayerScript>();
+
+        if (player != null) {
+            Cursor.lockState = CursorLockMode.Locked;
+        } else {
+            Cursor.lockState = CursorLockMode.None;
+        } 
     }
 
 }

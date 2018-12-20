@@ -22,6 +22,7 @@ public class CombatScript : MonoBehaviour {
     private GameObject keyFinder;
 
     [SerializeField] float shootRange, meleeRange;
+    [SerializeField] PlayerScript player;
 
     //TEMP: Text to notify if wrong weapon was used
     public Text notifyText;
@@ -48,115 +49,123 @@ public class CombatScript : MonoBehaviour {
 	void Update () {
 
         dustEnemy = GameObject.FindGameObjectWithTag("RedEnemy");
-        //Switches between the two weapon types. Blue Weapon is the shotgun, RedWeapon is the sword/melee
-
-        if (Input.GetAxis("Mouse ScrollWheel") > 0 || Input.GetKeyDown(keyFinder.GetComponent<KeyBindsScript>().ranged))
-        {
-            BlueWeapon();
-            _isBlue = true;
-            _isRed = false;
-            _vaccuumOn = false;
-        } else if (Input.GetAxis("Mouse ScrollWheel") < 0 || Input.GetKeyDown(keyFinder.GetComponent<KeyBindsScript>().melee))
-        {
-            RedWeapon();
-            _isRed = true;
-            _isBlue = false;
-            _vaccuumOn = false;
-        } else if(Input.GetKeyDown(keyFinder.GetComponent<KeyBindsScript>().hoover) && canHoover)
-        {
-            Vacuum();
-            _vaccuumOn = true;
-            _isRed = false;
-            _isBlue = false;
-            staticForce = 0;
-        }
-
-
-        //Calls the shoot function, and sets the cooldown (attackCD) for the shot, also calls animation
-
-        if (_isBlue && Input.GetMouseButtonDown(0) && _hasAttacked == false && isSucking == false && currentAmmo > 0)
-        {
-            currentAmmo -= 1;
-            _hasAttacked = true;
-            //_blueEnemy.SetActive(false);
-            gunAnim.SetTrigger("Shoot");
-            Shoot();
-        } 
-
-        //Sword swing, calls the swing function and sets the cooldown for the attack, also calls swing animation
-
-        else if (_isRed && Input.GetMouseButtonDown(0) && _hasAttacked == false && isSucking == false)
-        {
-            _hasAttacked = true;
-            //_redEnemy.SetActive(false);
-
-            swordAnim.SetTrigger("swing2");
-            Swing();
-        }
-
-        if(Input.GetMouseButton(0) && _vaccuumOn == true && isSucking == false)
-        {
-            isSucking = true;
-            suckTimer -= Time.deltaTime;
-            SuckemUp();
-        } else
-        {
-            isSucking = false;
-        }
-
-        //Starts the cooldown timer once Shoot function has been called
-
-        if(_hasAttacked)
-        {
-            attackCD -= Time.deltaTime;
-        }
-
-        //Resets the cooldown and the shot status once the timer hits 0
-
-        if(attackCD <= 0)
-        {
-            attackCD = cdTimer;
-            _hasAttacked = false;
-        }
 
         ammoBar.value = AmmoCount();
 
         vacBar.value = staticForce;
 
-        if(Input.GetKey(KeyCode.E))
-        {
-            Reload();
-        }
-        else
-        {
-            _reloader.SetActive(false);
+        if (!player.dead) {
+
+            //Switches between the two weapon types. Blue Weapon is the shotgun, RedWeapon is the sword/melee
+
+            if (Input.GetAxis("Mouse ScrollWheel") > 0 || Input.GetKeyDown(keyFinder.GetComponent<KeyBindsScript>().ranged))
+            {
+                BlueWeapon();
+                _isBlue = true;
+                _isRed = false;
+                _vaccuumOn = false;
+            } else if (Input.GetAxis("Mouse ScrollWheel") < 0 || Input.GetKeyDown(keyFinder.GetComponent<KeyBindsScript>().melee))
+            {
+                RedWeapon();
+                _isRed = true;
+                _isBlue = false;
+                _vaccuumOn = false;
+            } else if (Input.GetKeyDown(keyFinder.GetComponent<KeyBindsScript>().hoover) && canHoover)
+            {
+                Vacuum();
+                _vaccuumOn = true;
+                _isRed = false;
+                _isBlue = false;
+                staticForce = 0;
+            }
+
+
+            //Calls the shoot function, and sets the cooldown (attackCD) for the shot, also calls animation
+
+            if (_isBlue && Input.GetMouseButtonDown(0) && _hasAttacked == false && isSucking == false && currentAmmo > 0)
+            {
+                currentAmmo -= 1;
+                _hasAttacked = true;
+                //_blueEnemy.SetActive(false);
+                gunAnim.SetTrigger("Shoot");
+                Shoot();
+            }
+
+            //Sword swing, calls the swing function and sets the cooldown for the attack, also calls swing animation
+
+            else if (_isRed && Input.GetMouseButtonDown(0) && _hasAttacked == false && isSucking == false)
+            {
+                _hasAttacked = true;
+                //_redEnemy.SetActive(false);
+
+                swordAnim.SetTrigger("swing2");
+                Swing();
+            }
+
+            if (Input.GetMouseButton(0) && _vaccuumOn == true && isSucking == false)
+            {
+                isSucking = true;
+                suckTimer -= Time.deltaTime;
+                SuckemUp();
+            } else
+            {
+                isSucking = false;
+            }
+
+            //Starts the cooldown timer once Shoot function has been called
+
+            if (_hasAttacked)
+            {
+                attackCD -= Time.deltaTime;
+            }
+
+            //Resets the cooldown and the shot status once the timer hits 0
+
+            if (attackCD <= 0)
+            {
+                attackCD = cdTimer;
+                _hasAttacked = false;
+            }
+
+
+
+            if (Input.GetKey(KeyCode.E))
+            {
+                Reload();
+            }
+            else
+            {
+                _reloader.SetActive(false);
+            }
+
+            if (reloadTimer <= 0 && currentAmmo <= 20)
+            {
+                currentAmmo += 2;
+                reloadTimer = 0.5f;
+            } else if (currentAmmo >= 20)
+            {
+                currentAmmo = 20;
+                reloadTimer = 0.5f;
+            }
+
+            if (staticForce >= maxStatic)
+            {
+                canHoover = true;
+            }
+
+            if (suckTimer <= 0)
+            {
+                canHoover = false;
+                staticForce = 0;
+                suckTimer = 3;
+                BlueWeapon();
+                _isBlue = true;
+                _isRed = false;
+                _vaccuumOn = false;
+            }
+
         }
 
-        if (reloadTimer <= 0 && currentAmmo <= 20)
-        {
-            currentAmmo += 2;
-            reloadTimer = 0.5f;
-        } else if(currentAmmo >= 20)
-        {
-            currentAmmo = 20;
-            reloadTimer = 0.5f;
-        }
-
-        if(staticForce >= maxStatic)
-        {
-            canHoover = true;
-        }
-
-        if(suckTimer <= 0)
-        {
-            canHoover = false;
-            staticForce = 0;
-            suckTimer = 3;
-            BlueWeapon();
-            _isBlue = true;
-            _isRed = false;
-            _vaccuumOn = false;
-        }
     }
 
     float AmmoCount()
@@ -189,7 +198,7 @@ public class CombatScript : MonoBehaviour {
     }
 
     //shoot function, creates a raycast in front of player, if it hits the "Blue Enemy", that enemy's script is called and it takes damage
-
+    
     public void Shoot()
     {
         muzzleFlash.Play();
@@ -266,7 +275,7 @@ public class CombatScript : MonoBehaviour {
             if (target2 != null && target2.tag == "Stain Enemy" && target2.stainHealth == 10)
             {
                 swingHit = true;
-                Invoke("SendDamage2", 0.25f);
+                SendDamage2();
             }
 
             if (swingHit)
@@ -275,7 +284,7 @@ public class CombatScript : MonoBehaviour {
 
                 if (target != null && target.tag == "RedEnemy")
                 {
-                    Invoke("SendDamage1", 0.25f);
+                    SendDamage1();
 
                     GameObject impactGO = Instantiate(dustImpactEffect, hit.point, dustImpactEffect.transform.rotation);
                     impactGO.GetComponent<ParticleSystem>().Play();
@@ -283,7 +292,7 @@ public class CombatScript : MonoBehaviour {
 
                 if (target2 != null && target2.tag == "Stain Enemy")
                 {
-                    Invoke("SendDamage2", 0.25f);
+                    SendDamage2();
 
                     GameObject impactGO = Instantiate(dustImpactEffect, hit.point, dustImpactEffect.transform.rotation);
                     impactGO.GetComponent<ParticleSystem>().Play();

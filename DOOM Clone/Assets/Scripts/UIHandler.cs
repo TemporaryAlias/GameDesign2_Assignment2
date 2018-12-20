@@ -28,9 +28,9 @@ public class UIHandler : MonoBehaviour
     }
 
 
-    public void StartFadeOut()
+    public void StartFadeOut(int sceneIndex)
     {
-        StartCoroutine("FadeOut");
+        StartCoroutine("FadeOut", sceneIndex);
     }
 
     public void StartImageFade(Image image)
@@ -136,7 +136,7 @@ public class UIHandler : MonoBehaviour
         fadeImage.gameObject.SetActive(false);
     }
 
-    IEnumerator FadeOut()
+    IEnumerator FadeOut(int sceneIndex)
     {
         fadeImage.gameObject.SetActive(true);
 
@@ -151,6 +151,8 @@ public class UIHandler : MonoBehaviour
 
             yield return new WaitForSeconds(fadeTime);
         }
+
+        LevelManager.instance.ChangeScene(sceneIndex);
     }
 
 }

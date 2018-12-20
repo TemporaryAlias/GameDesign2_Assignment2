@@ -17,8 +17,8 @@ public class DustEnemyScript : MonoBehaviour {
 	void Start () {
         navAgent = GetComponent<NavMeshAgent>();
         
-        attackCD = 2;
-        CDTime = attackCD;
+        //attackCD = 2;
+        //CDTime = attackCD;
         EnemyRB = GetComponent<Rigidbody>();
 
         navAgent.stoppingDistance = meleeRange;
