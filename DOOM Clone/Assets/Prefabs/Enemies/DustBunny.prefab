@@ -93,7 +93,7 @@ MonoBehaviour:
   anim: {fileID: 6029045346632946737}
   deathSound: {fileID: 8300000, guid: 35e011586cfcb4a43976867290e9c418, type: 3}
   playerHitClip: {fileID: 8300000, guid: cce2fbef2bc698f469c7ae668d2ebc91, type: 3}
-  hitClip: {fileID: 0}
+  hitClip: {fileID: 8300000, guid: 5abf31af31783dd47b267206e048a2b6, type: 3}
 --- !u!195 &784041506
 NavMeshAgent:
   m_ObjectHideFlags: 0

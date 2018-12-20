@@ -36,6 +36,10 @@ public class StainEnemyScript : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () {
 
+        if (stainHealth <= 0f)
+        {
+            Die();
+        }
 
         transform.LookAt(Player.transform);
         dist = Vector3.Distance(transform.position, Player.transform.position);
@@ -130,6 +134,7 @@ public class StainEnemyScript : MonoBehaviour {
     void Die()
     {
         LevelManager.instance.PlaySound(deathClip);
+        LevelManager.instance.stainsKilled += 1;
 
         Destroy(gameObject);
     }

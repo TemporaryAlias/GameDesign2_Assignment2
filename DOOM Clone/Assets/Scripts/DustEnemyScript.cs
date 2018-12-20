@@ -155,7 +155,11 @@ public class DustEnemyScript : MonoBehaviour {
     void Die()
     {
         LevelManager.instance.PlaySound(deathSound);
+        LevelManager.instance.dustKilled += 1;
+
         Destroy(gameObject);
+
+        
     }
 
     void OnDrawGizmos()

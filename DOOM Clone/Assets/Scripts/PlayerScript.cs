@@ -98,7 +98,7 @@ public class PlayerScript : MonoBehaviour {
         return playerHealth / maxHealth;
     }
 
-    float EnemyCount()
+    public float EnemyCount()
     {
         dustEnemycount = GameObject.FindGameObjectsWithTag("RedEnemy").Length;
         stainEnemycount = GameObject.FindGameObjectsWithTag("Stain Enemy").Length;
@@ -116,9 +116,8 @@ public class PlayerScript : MonoBehaviour {
     void OnCollisionEnter(Collision collision)
     {
         
-        if (collision.gameObject.tag == "EnemyProjectile" && GetComponent<CombatScript>().isSucking == false)
+        if (collision.gameObject.tag == "EnemyProjectile" && GetComponent<CombatScript>().isSucking == false && this.isActiveAndEnabled)
         {
-            Debug.Log("hit");
             playerHealth -= 1;
 
             audioSource.PlayOneShot(hitClip);

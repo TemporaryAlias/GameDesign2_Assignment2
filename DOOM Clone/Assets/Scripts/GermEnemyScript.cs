@@ -82,6 +82,7 @@ public class GermEnemyScript : MonoBehaviour {
     void Die()
     {
         LevelManager.instance.PlaySound(deathClip);
+        LevelManager.instance.germsKilled += 1;
 
         Destroy(gameObject);
     }

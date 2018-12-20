@@ -20,6 +20,8 @@ public class LevelManager : MonoBehaviour
 
     public UIHandler uiHandler;
 
+    public int stainsKilled, germsKilled, dustKilled;
+
     PlayerScript player;
     MouseMovementScript playerMouse;
 
@@ -27,6 +29,20 @@ public class LevelManager : MonoBehaviour
 
     void Start() {
         SceneManager.sceneLoaded += OnSceneLoad;
+
+        uiHandler = FindObjectOfType<UIHandler>();
+        player = FindObjectOfType<PlayerScript>();
+        playerMouse = FindObjectOfType<MouseMovementScript>();
+
+        if (player != null || playerMouse != null) {
+            Cursor.lockState = CursorLockMode.Locked;
+
+            stainsKilled = 0;
+            germsKilled = 0;
+            dustKilled = 0;
+        } else {
+            Cursor.lockState = CursorLockMode.None;
+        }
     }
     
     void Update()
@@ -36,9 +52,9 @@ public class LevelManager : MonoBehaviour
         }
 
         if (player != null) {
-            //if (player.currentEnemies == 0) {
-              //  ChangeScene(3);
-            //}
+            if (player.EnemyCount() <= 0) {
+                ChangeScene(3);
+            }
         }
     }
     

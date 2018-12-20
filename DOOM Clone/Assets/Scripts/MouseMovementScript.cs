@@ -152,7 +152,7 @@ public class MouseMovementScript : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
 
-        if (collision.gameObject.tag == "EnemyProjectile" && GetComponent<MouseCombatScript>().isSucking == false)
+        if (collision.gameObject.tag == "EnemyProjectile" && GetComponent<MouseCombatScript>().isSucking == false && this.isActiveAndEnabled)
         {
             Debug.Log("hit");
             playerHealth -= 1;

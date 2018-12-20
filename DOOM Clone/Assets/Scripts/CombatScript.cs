@@ -215,7 +215,6 @@ public class CombatScript : MonoBehaviour {
         RaycastHit hit;
         if(Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootRange))
         {
-            Debug.Log(hit.transform.name);
 
             GermEnemyScript target1 = hit.transform.GetComponent<GermEnemyScript>();
             StainEnemyScript target2 = hit.transform.GetComponent<StainEnemyScript>();
@@ -264,7 +263,6 @@ public class CombatScript : MonoBehaviour {
         RaycastHit hit;
         if(Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, meleeRange))
         {
-            Debug.Log(hit.transform.name);
 
             DustEnemyScript target = hit.transform.GetComponent<DustEnemyScript>();
             StainEnemyScript target2 = hit.transform.GetComponent<StainEnemyScript>();
@@ -363,7 +361,6 @@ public class CombatScript : MonoBehaviour {
         
         if (Physics.Raycast(transform.position, transform.forward, out hit))
         {
-            Debug.Log(hit.transform.name);
 
             DustEnemyScript target = hit.transform.GetComponent<DustEnemyScript>();
             StainEnemyScript target2 = hit.transform.GetComponent<StainEnemyScript>();
@@ -397,7 +394,6 @@ public class CombatScript : MonoBehaviour {
 
         if(Physics.Raycast(transform.position, transform.forward, out hit, 1f))
         {
-            Debug.Log(hit.transform.name);
 
             GameObject target = hit.transform.gameObject;
 
