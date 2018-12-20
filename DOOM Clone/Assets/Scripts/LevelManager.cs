@@ -21,6 +21,7 @@ public class LevelManager : MonoBehaviour
     public UIHandler uiHandler;
 
     PlayerScript player;
+    MouseMovementScript playerMouse;
 
     AudioSource audioSource;
 
@@ -31,9 +32,9 @@ public class LevelManager : MonoBehaviour
     void Update()
     {
         if (player != null) {
-            if (player.currentEnemies == 0) {
-                ChangeScene(3);
-            }
+            //if (player.currentEnemies == 0) {
+              //  ChangeScene(3);
+            //}
         }
     }
     
@@ -45,8 +46,9 @@ public class LevelManager : MonoBehaviour
         uiHandler = FindObjectOfType<UIHandler>();
         player = FindObjectOfType<PlayerScript>();
         audioSource = GetComponent<AudioSource>();
+        playerMouse = FindObjectOfType<MouseMovementScript>();
 
-        if (player != null) {
+        if (player != null || playerMouse != null) {
             Cursor.lockState = CursorLockMode.Locked;
         } else {
             Cursor.lockState = CursorLockMode.None;

@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class DustEnemyScript : MonoBehaviour {
 
-    private bool _attack, isAggro, nearPlayer;
+    private bool _attack, _attack2, isAggro, nearPlayer;
     [SerializeField] float agroDistance, meleeRange, attackCD, CDTime;
     [SerializeField] GameObject Player;
     public float EnemyHealth;
@@ -65,10 +65,16 @@ public class DustEnemyScript : MonoBehaviour {
         if(Physics.Raycast(transform.position, transform.forward, out hit, meleeRange))
         {
             PlayerScript target = hit.transform.GetComponent<PlayerScript>();
+            MouseMovementScript target2 = hit.transform.GetComponent<MouseMovementScript>();
 
             if(target != null && target.tag == "Player")
             {
                 _attack = true;                
+            }
+
+            if (target2 != null)
+            {
+                _attack2 = true;
             }
         }
 
@@ -80,9 +86,17 @@ public class DustEnemyScript : MonoBehaviour {
             Attack();            
         }
 
+        if (_attack2 == true && attackCD <= 0 && Player.GetComponent<MouseCombatScript>().isSucking == false)
+        {
+            anim.SetTrigger("Attack");
+
+            Attack();
+        }
+
+
         // starts attackCD
 
-        if(_attack == true)
+        if(_attack == true || _attack2 == true)
         {
             attackCD -= Time.deltaTime;            
         }
@@ -93,6 +107,7 @@ public class DustEnemyScript : MonoBehaviour {
         if(attackCD >= 0)
         {
             _attack = false;
+            _attack2 = false;
         }
 
 
@@ -127,6 +142,9 @@ public class DustEnemyScript : MonoBehaviour {
         Player.GetComponent<PlayerScript>().playerHealth -= 1;
 
         audioSource.PlayOneShot(playerHitClip);
+
+        Player.GetComponent<MouseMovementScript>().playerHealth -= 1;
+
         attackCD = 4;
 
         //makes enemy jump just to show the attack went through, placeholder anim
@@ -153,7 +171,7 @@ public class DustEnemyScript : MonoBehaviour {
 
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.gameObject.tag == "Player" && Player.GetComponent<CombatScript>().isSucking)
+        if (collision.gameObject.tag == "Player" && (Player.GetComponent<CombatScript>().isSucking) || Player.GetComponent<MouseCombatScript>().isSucking)
         {
             Destroy(this.gameObject);
         }
