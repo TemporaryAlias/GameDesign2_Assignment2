@@ -11,8 +11,9 @@ public class KeyBindsScript : MonoBehaviour {
     public Button forwardButton, backButton, leftButton, rightButton, hooverButton;
     public Text forwardText, backText, leftText, rightText, hooverText, changeText, meleeText, rangedText;
     //public bool isForward = false;
+    public GameObject mouseText, mouseButton, keyboardButton, keyBoardText;
     enum Enum {forward, back, left, right,vacuum};
-    public bool forwardMap, backMap, leftMap, rightMap, hooverMap, meleeMap, rangedMap;
+    public bool forwardMap, backMap, leftMap, rightMap, hooverMap, meleeMap, rangedMap, mouseOnly;
 	// Use this for initialization
 	void Start () {
         forward = KeyCode.W;
@@ -147,6 +148,14 @@ public class KeyBindsScript : MonoBehaviour {
         }
         //DontDestroyOnLoad(this.gameObject);
 
+        if(mouseOnly)
+        {
+            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>().enabled = false;
+            GameObject.FindGameObjectWithTag("Player").GetComponent<CombatScript>().enabled = false;
+            GameObject.FindGameObjectWithTag("Player").GetComponent<MouseMovementScript>().enabled = true;
+            GameObject.FindGameObjectWithTag("Player").GetComponent<MouseCombatScript>().enabled = false;
+        }
+
     }
     
 
@@ -183,6 +192,37 @@ public class KeyBindsScript : MonoBehaviour {
     public void Ranged()
     {
         rangedMap = true;
+    }
+
+    public void MouseOnly()
+    {
+
+        /*GameObject[] goArray = GameObject.FindGameObjectsWithTag("Keybind");
+        GameObject[] textArray = GameObject.FindGameObjectsWithTag("KeyText");
+        
+        foreach (GameObject go in goArray)
+        {
+            go.SetActive(false);
+        }
+        foreach(GameObject textGo in textArray)
+        {
+            textGo.SetActive(false);
+        }*/
+        mouseOnly = true;
+        keyBoardText.SetActive(false);
+        mouseText.SetActive(true);
+        keyboardButton.SetActive(true);
+        mouseButton.SetActive(false);        
+        
+    }
+
+    public void KeyBoard()
+    {
+        mouseOnly = false;
+        keyBoardText.SetActive(true);
+        mouseText.SetActive(false);
+        keyboardButton.SetActive(false);
+        mouseButton.SetActive(true);
     }
 
     public void ChangeScene(int sceneIndex)

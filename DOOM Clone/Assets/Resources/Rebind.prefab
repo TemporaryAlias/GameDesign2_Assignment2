@@ -43,10 +43,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ac58ceb5c3f73746a3c8f0fa4b2bc3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forward: 97
+  forward: 119
   back: 115
-  left: 100
-  right: 119
+  left: 97
+  right: 100
   hoover: 102
   melee: 0
   ranged: 0
@@ -63,6 +63,10 @@ MonoBehaviour:
   changeText: {fileID: 0}
   meleeText: {fileID: 0}
   rangedText: {fileID: 0}
+  mouseText: {fileID: 0}
+  mouseButton: {fileID: 0}
+  keyboardButton: {fileID: 0}
+  keyBoardText: {fileID: 0}
   forwardMap: 0
   backMap: 0
   leftMap: 0
@@ -70,3 +74,4 @@ MonoBehaviour:
   hooverMap: 0
   meleeMap: 0
   rangedMap: 0
+  mouseOnly: 0
