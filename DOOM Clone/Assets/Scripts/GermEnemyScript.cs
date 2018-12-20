@@ -14,9 +14,14 @@ public class GermEnemyScript : MonoBehaviour {
     [SerializeField] bool isAggro;
     NavMeshAgent navAgent;
     [SerializeField] Animator bodyAnim, leftArmAnim, rightArmAnim, mouthAnim, feetAnim;
+    [SerializeField] AudioClip deathClip, shootClip, hitClip;
+
+    AudioSource audioSource;
 
     private void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+
         navAgent = GetComponent<NavMeshAgent>();
         navAgent.stoppingDistance = rangedAttackDist;
         Player = GameObject.FindGameObjectWithTag("Player");
@@ -51,6 +56,7 @@ public class GermEnemyScript : MonoBehaviour {
             //Instantiate(EnemyProjectile, new Vector3(transform.position.x, transform.position.y + 150, transform.position.z),transform.rotation);
             mouthAnim.SetTrigger("Attack");
             Instantiate(EnemyProjectile, projectileSpawnPoint.position, transform.rotation);
+            audioSource.PlayOneShot(shootClip);
             shotTimer = shotCD;
         }
     }
@@ -61,6 +67,8 @@ public class GermEnemyScript : MonoBehaviour {
     {
         EnemyHealth -= dmg;
         transform.localScale = new Vector3((float)(transform.localScale.x * 0.75), (float)(transform.localScale.y * 0.75), (float)(transform.localScale.z * 0.75));
+
+        audioSource.PlayOneShot(hitClip);
 
         if (EnemyHealth <= 0f)
         {
@@ -73,6 +81,8 @@ public class GermEnemyScript : MonoBehaviour {
 
     void Die()
     {
+        LevelManager.instance.PlaySound(deathClip);
+
         Destroy(gameObject);
     }
 

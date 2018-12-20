@@ -24,11 +24,16 @@ public class CombatScript : MonoBehaviour {
     [SerializeField] float shootRange, meleeRange;
     [SerializeField] PlayerScript player;
 
+    [SerializeField] AudioClip meleeClip, rangedClip, vacClip, reloadClip;
+
+    AudioSource audioSouce;
+
     //TEMP: Text to notify if wrong weapon was used
     public Text notifyText;
 
     // Use this for initialization
     void Start () {
+        audioSouce = GetComponent<AudioSource>();
 
         keyFinder = Resources.Load<GameObject>("Rebind");
         playerAnim = GetComponent<Animator>();
@@ -142,6 +147,8 @@ public class CombatScript : MonoBehaviour {
             {
                 currentAmmo += 2;
                 reloadTimer = 0.5f;
+
+                audioSouce.PlayOneShot(reloadClip);
             } else if (currentAmmo >= 20)
             {
                 currentAmmo = 20;
@@ -195,6 +202,7 @@ public class CombatScript : MonoBehaviour {
         _blueWeapon.SetActive(false);
         _redWeapon.SetActive(false);
 
+        audioSouce.PlayOneShot(vacClip);
     }
 
     //shoot function, creates a raycast in front of player, if it hits the "Blue Enemy", that enemy's script is called and it takes damage
@@ -202,6 +210,8 @@ public class CombatScript : MonoBehaviour {
     public void Shoot()
     {
         muzzleFlash.Play();
+        audioSouce.PlayOneShot(rangedClip);
+
         RaycastHit hit;
         if(Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootRange))
         {
@@ -247,7 +257,10 @@ public class CombatScript : MonoBehaviour {
 
     public void Swing()
     {
-               
+
+
+        audioSouce.PlayOneShot(meleeClip);
+
         RaycastHit hit;
         if(Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, meleeRange))
         {

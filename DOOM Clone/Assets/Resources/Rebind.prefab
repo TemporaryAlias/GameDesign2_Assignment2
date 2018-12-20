@@ -49,7 +49,7 @@ MonoBehaviour:
   right: 100
   hoover: 102
   melee: 0
-  ranged: 0
+  ranged: 52
   forwardButton: {fileID: 0}
   backButton: {fileID: 0}
   leftButton: {fileID: 0}

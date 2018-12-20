@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class DustEnemyScript : MonoBehaviour {
 
-    public bool _attack, _attack2, isAggro, nearPlayer;
+    private bool _attack, _attack2, isAggro, nearPlayer;
     [SerializeField] float agroDistance, meleeRange, attackCD, CDTime;
     [SerializeField] GameObject Player;
     public float EnemyHealth;
@@ -13,9 +13,15 @@ public class DustEnemyScript : MonoBehaviour {
     [SerializeField] Animator anim;
     NavMeshAgent navAgent;
 
+    [SerializeField] AudioClip deathSound, playerHitClip, hitClip;
+
+    AudioSource audioSource;
+
 	// Use this for initialization
 	void Start () {
         navAgent = GetComponent<NavMeshAgent>();
+
+        audioSource = GetComponent<AudioSource>();
         
         //attackCD = 2;
         //CDTime = attackCD;
@@ -65,6 +71,7 @@ public class DustEnemyScript : MonoBehaviour {
             {
                 _attack = true;                
             }
+
             if (target2 != null)
             {
                 _attack2 = true;
@@ -82,12 +89,14 @@ public class DustEnemyScript : MonoBehaviour {
         if (_attack2 == true && attackCD <= 0 && Player.GetComponent<MouseCombatScript>().isSucking == false)
         {
             anim.SetTrigger("Attack");
+
             Attack();
         }
 
+
         // starts attackCD
 
-        if (_attack == true || _attack2 == true)
+        if(_attack == true || _attack2 == true)
         {
             attackCD -= Time.deltaTime;            
         }
@@ -117,6 +126,8 @@ public class DustEnemyScript : MonoBehaviour {
         EnemyHealth -= dmg;
         transform.localScale = new Vector3((float)(transform.localScale.x * 0.75), (float)(transform.localScale.y * 0.75), (float)(transform.localScale.z * 0.75));
 
+        audioSource.PlayOneShot(hitClip);
+
         if (EnemyHealth <= 0f)
         {
             Die();
@@ -129,7 +140,11 @@ public class DustEnemyScript : MonoBehaviour {
     {
         Debug.Log("PLayerHit");
         Player.GetComponent<PlayerScript>().playerHealth -= 1;
+
+        audioSource.PlayOneShot(playerHitClip);
+
         Player.GetComponent<MouseMovementScript>().playerHealth -= 1;
+
         attackCD = 4;
 
         //makes enemy jump just to show the attack went through, placeholder anim
@@ -137,10 +152,9 @@ public class DustEnemyScript : MonoBehaviour {
 
     }
 
-    
-
     void Die()
     {
+        LevelManager.instance.PlaySound(deathSound);
         Destroy(gameObject);
     }
 
@@ -157,7 +171,7 @@ public class DustEnemyScript : MonoBehaviour {
 
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.gameObject.tag == "Player" && (Player.GetComponent<CombatScript>().isSucking || Player.GetComponent<MouseCombatScript>().isSucking))
+        if (collision.gameObject.tag == "Player" && (Player.GetComponent<CombatScript>().isSucking) || Player.GetComponent<MouseCombatScript>().isSucking)
         {
             Destroy(this.gameObject);
         }

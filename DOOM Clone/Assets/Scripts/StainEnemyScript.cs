@@ -12,11 +12,17 @@ public class StainEnemyScript : MonoBehaviour {
     private bool goToGround, inGround, createGerm, isAggro;
     Vector3 startYPos;
 
+    [SerializeField] AudioClip deathClip, hitClip, shootClip, spawnClip;
+
+    AudioSource audioSource;
+
     NavMeshAgent navAgent;
 
 	// Use this for initialization
 	void Start () {
         //goToGround = true;
+        audioSource = GetComponent<AudioSource>();
+
         groundTimer = 5;
         groundCd = 15;
         germTimer = germCd;
@@ -67,6 +73,8 @@ public class StainEnemyScript : MonoBehaviour {
         if (dist <= rangedAttackDist && shotTimer <= 0)
         {
             //Instantiate(EnemyProjectile, new Vector3(transform.position.x, transform.position.y + 150, transform.position.z),transform.rotation);
+            audioSource.PlayOneShot(shootClip);
+
             Instantiate(EnemyProjectile, projectileSpawnPoint.position, transform.rotation);
             shotTimer = shotCD;
         }
@@ -99,7 +107,9 @@ public class StainEnemyScript : MonoBehaviour {
     }
 
     void CreateGerm()
-    {        
+    {
+        audioSource.PlayOneShot(spawnClip);
+
         Instantiate(GermEnemy,GermSpawn1.transform.position, transform.rotation);
         Instantiate(GermEnemy, GermSpawn2.transform.position, transform.rotation);
         Instantiate(GermEnemy, GermSpawn3.transform.position, transform.rotation);
@@ -108,6 +118,8 @@ public class StainEnemyScript : MonoBehaviour {
     public void TakeDamage(float dmg)
     {
         stainHealth -= dmg;
+        audioSource.PlayOneShot(hitClip);
+
         if (stainHealth <= 0f)
         {
             Die();
@@ -117,6 +129,8 @@ public class StainEnemyScript : MonoBehaviour {
 
     void Die()
     {
+        LevelManager.instance.PlaySound(deathClip);
+
         Destroy(gameObject);
     }
 }

@@ -14,6 +14,8 @@ public class LevelManager : MonoBehaviour
         }
 
         instance = this;
+
+        DontDestroyOnLoad(gameObject);
     }
 
     public UIHandler uiHandler;
@@ -21,13 +23,19 @@ public class LevelManager : MonoBehaviour
     PlayerScript player;
     MouseMovementScript playerMouse;
 
+    AudioSource audioSource;
+
     void Start() {
         SceneManager.sceneLoaded += OnSceneLoad;
     }
     
     void Update()
     {
-        
+        if (player != null) {
+            //if (player.currentEnemies == 0) {
+              //  ChangeScene(3);
+            //}
+        }
     }
     
     public void ChangeScene(int newSceneIndex) {
@@ -37,6 +45,7 @@ public class LevelManager : MonoBehaviour
     void OnSceneLoad(Scene scene, LoadSceneMode mode) {
         uiHandler = FindObjectOfType<UIHandler>();
         player = FindObjectOfType<PlayerScript>();
+        audioSource = GetComponent<AudioSource>();
         playerMouse = FindObjectOfType<MouseMovementScript>();
 
         if (player != null || playerMouse != null) {
@@ -44,6 +53,10 @@ public class LevelManager : MonoBehaviour
         } else {
             Cursor.lockState = CursorLockMode.None;
         } 
+    }
+
+    public void PlaySound(AudioClip sound) {
+        audioSource.PlayOneShot(sound);
     }
 
 }
