@@ -16,6 +16,8 @@ public class StainEnemyScript : MonoBehaviour {
 
     [SerializeField] AudioClip deathClip, hitClip, shootClip, spawnClip;
 
+    float startHP;
+
     AudioSource audioSource;
 
     NavMeshAgent navAgent;
@@ -24,6 +26,8 @@ public class StainEnemyScript : MonoBehaviour {
 	void Start () {
         //goToGround = true;
         audioSource = GetComponent<AudioSource>();
+
+        startHP = stainHealth;
 
         groundTimer = 5;
         groundCd = 15;
@@ -50,7 +54,7 @@ public class StainEnemyScript : MonoBehaviour {
         transform.LookAt(Player.transform);
         dist = Vector3.Distance(transform.position, Player.transform.position);
 
-        if (dist > rangedAttackDist && dist < agroRange)
+        if (dist > rangedAttackDist && dist < agroRange && stainHealth < startHP)
         {
             isAggro = true;
         }
@@ -72,7 +76,7 @@ public class StainEnemyScript : MonoBehaviour {
         }
         else if (inGround == false && goToGround == false)
         {
-            transform.position = startYPos;
+            //transform.position = startYPos;
         }
 
         if (shotTimer > 0)
@@ -95,7 +99,7 @@ public class StainEnemyScript : MonoBehaviour {
     {
         if (goToGround)
         {
-            transform.position = new Vector3(transform.position.x, transform.position.y - 1, transform.position.z);
+            //transform.position = new Vector3(transform.position.x, transform.position.y - 1, transform.position.z);
             groundCd = 15;
             
             inGround = true;

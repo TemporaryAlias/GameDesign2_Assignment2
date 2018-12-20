@@ -154,7 +154,6 @@ public class MouseMovementScript : MonoBehaviour
 
         if (collision.gameObject.tag == "EnemyProjectile" && GetComponent<MouseCombatScript>().isSucking == false && this.isActiveAndEnabled)
         {
-            Debug.Log("hit");
             playerHealth -= 1;
 
             audioSource.PlayOneShot(hitClip);
