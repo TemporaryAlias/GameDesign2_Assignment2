@@ -8,7 +8,7 @@ public class CombatScript : MonoBehaviour {
 
     private Animator playerAnim;
     [SerializeField] Animator swordAnim, gunAnim;
-    [SerializeField] GameObject _blueWeapon, _redWeapon, _redEnemy, _blueEnemy, _swordHitBox, _vacuum, _reloader;
+    [SerializeField] GameObject _blueWeapon, _redWeapon, _redEnemy, _blueEnemy, _vacuum, _reloader;
     GameObject dustEnemy;
     [SerializeField] ParticleSystem muzzleFlash;
     public float damage = 10f, attackCD;
@@ -68,6 +68,7 @@ public class CombatScript : MonoBehaviour {
             _vaccuumOn = true;
             _isRed = false;
             _isBlue = false;
+            staticForce = 0;
         }
 
 
@@ -88,8 +89,8 @@ public class CombatScript : MonoBehaviour {
         {
             _hasAttacked = true;
             //_redEnemy.SetActive(false);
-            
-            
+
+            swordAnim.SetTrigger("swing2");
             Swing();
         }
 
@@ -224,6 +225,7 @@ public class CombatScript : MonoBehaviour {
             else if (targetGO != null && targetGO.tag == "RedEnemy")
             {
                 StartCoroutine("WrongWeaponNotify");
+                LevelManager.instance.uiHandler.ClothNotif();
             }
 
             
@@ -258,6 +260,7 @@ public class CombatScript : MonoBehaviour {
 
             if (targetGO != null && targetGO.tag == "BlueEnemy") {
                 StartCoroutine("WrongWeaponNotify");
+                LevelManager.instance.uiHandler.SprayNotif();
             }
 
             if (target2 != null && target2.tag == "Stain Enemy" && target2.stainHealth == 10)
@@ -268,7 +271,7 @@ public class CombatScript : MonoBehaviour {
 
             if (swingHit)
             {
-                swordAnim.SetTrigger("swing2");
+                //swordAnim.SetTrigger("swing2");
 
                 if (target != null && target.tag == "RedEnemy")
                 {
@@ -292,7 +295,7 @@ public class CombatScript : MonoBehaviour {
 
         if (swingHit == false)
         {
-            swordAnim.SetTrigger("swing");
+            //swordAnim.SetTrigger("swing");
         }
        
     }
@@ -304,7 +307,11 @@ public class CombatScript : MonoBehaviour {
         if (Physics.Raycast(transform.position, transform.forward, out hit, 150)) {
 
             DustEnemyScript target = hit.transform.GetComponent<DustEnemyScript>();
-            target.TakeDamage(damage);
+
+            if (target != null) {
+                target.TakeDamage(damage);
+            }
+
             swingHit = false;
         }
         
@@ -318,7 +325,11 @@ public class CombatScript : MonoBehaviour {
         {
 
             StainEnemyScript target2 = hit.transform.GetComponent<StainEnemyScript>();
-            target2.TakeDamage(damage);
+
+            if (target2 != null) {
+                target2.TakeDamage(damage);
+            }
+
             swingHit = false;
         }
         
