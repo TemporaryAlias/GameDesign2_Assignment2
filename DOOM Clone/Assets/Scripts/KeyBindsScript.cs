@@ -150,10 +150,36 @@ public class KeyBindsScript : MonoBehaviour {
 
         if(mouseOnly)
         {
-            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>().enabled = false;
-            GameObject.FindGameObjectWithTag("Player").GetComponent<CombatScript>().enabled = false;
-            GameObject.FindGameObjectWithTag("Player").GetComponent<MouseMovementScript>().enabled = true;
-            GameObject.FindGameObjectWithTag("Player").GetComponent<MouseCombatScript>().enabled = false;
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+
+            if (player != null)
+            {
+                PlayerScript playerKeyboard = player.GetComponent<PlayerScript>();
+                CombatScript combatKeyboard = player.GetComponent<CombatScript>();
+                MouseMovementScript mouseMove = player.GetComponent<MouseMovementScript>();
+                MouseCombatScript mouseCombat = player.GetComponent<MouseCombatScript>();
+
+
+                if (playerKeyboard != null)
+                {
+                    playerKeyboard.enabled = false;
+                }
+
+                if (combatKeyboard != null)
+                {
+                    combatKeyboard.enabled = false;
+                }
+
+                if (mouseMove != null)
+                {
+                    mouseMove.enabled = true;
+                }
+
+                if (mouseCombat != null)
+                {
+                    mouseCombat.enabled = true;
+                }
+            }
         }
 
     }

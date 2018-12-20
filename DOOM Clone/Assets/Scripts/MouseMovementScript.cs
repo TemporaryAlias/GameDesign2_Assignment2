@@ -14,12 +14,20 @@ public class MouseMovementScript : MonoBehaviour
     [SerializeField] Slider healthBar;
     [SerializeField] Text remainingEnemies;
 
+
+    [SerializeField] AudioClip deathClip, hitClip;
+
+    [SerializeField] AudioSource audioSource;
+
     public bool dead, movingLeft;
 
 
     // Use this for initialization
     void Start()
     {
+
+        audioSource = GetComponent<AudioSource>();
+
         keyFinder = Resources.Load<GameObject>("Rebind");
         _myRb = GetComponent<Rigidbody>();
 
@@ -135,6 +143,8 @@ public class MouseMovementScript : MonoBehaviour
 
     void Die()
     {
+
+        audioSource.PlayOneShot(deathClip);
         dead = true;
         LevelManager.instance.uiHandler.StartFadeOut(0);
     }
@@ -146,6 +156,8 @@ public class MouseMovementScript : MonoBehaviour
         {
             Debug.Log("hit");
             playerHealth -= 1;
+
+            audioSource.PlayOneShot(hitClip);
         }
     }
 }

@@ -31,6 +31,10 @@ public class LevelManager : MonoBehaviour
     
     void Update()
     {
+        if (audioSource == null && (player != null || playerMouse != null)) { 
+            audioSource = GetComponent<AudioSource>();
+        }
+
         if (player != null) {
             //if (player.currentEnemies == 0) {
               //  ChangeScene(3);
@@ -45,7 +49,6 @@ public class LevelManager : MonoBehaviour
     void OnSceneLoad(Scene scene, LoadSceneMode mode) {
         uiHandler = FindObjectOfType<UIHandler>();
         player = FindObjectOfType<PlayerScript>();
-        audioSource = GetComponent<AudioSource>();
         playerMouse = FindObjectOfType<MouseMovementScript>();
 
         if (player != null || playerMouse != null) {
