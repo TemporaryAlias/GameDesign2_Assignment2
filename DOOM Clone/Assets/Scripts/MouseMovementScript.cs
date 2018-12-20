@@ -146,7 +146,7 @@ public class MouseMovementScript : MonoBehaviour
 
         audioSource.PlayOneShot(deathClip);
         dead = true;
-        LevelManager.instance.uiHandler.StartFadeOut(0);
+        LevelManager.instance.uiHandler.StartFadeOut(4);
     }
 
     void OnCollisionEnter(Collision collision)

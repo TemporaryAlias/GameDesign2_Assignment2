@@ -239,10 +239,12 @@ public class CombatScript : MonoBehaviour {
                 
                 GameObject impactGO = Instantiate(_impactEffect, hit.point, _impactEffect.transform.rotation);
                 impactGO.GetComponent<ParticleSystem>().Play();
+            } else if (target2 != null && target2.tag == "Stain Enemy" && target2.stainHealth <= 10)
+            {
+                LevelManager.instance.uiHandler.ClothNotif();
             }
             else if (targetGO != null && targetGO.tag == "RedEnemy")
             {
-                StartCoroutine("WrongWeaponNotify");
                 LevelManager.instance.uiHandler.ClothNotif();
             }
 
@@ -283,10 +285,13 @@ public class CombatScript : MonoBehaviour {
                 LevelManager.instance.uiHandler.SprayNotif();
             }
 
-            if (target2 != null && target2.tag == "Stain Enemy" && target2.stainHealth == 10)
+            if (target2 != null && target2.tag == "Stain Enemy" && target2.stainHealth <= 10)
             {
                 swingHit = true;
-                SendDamage2();
+                //SendDamage2(target2);
+            } else if (target2 != null && target2.tag == "Stain Enemy" && target2.stainHealth > 10)
+            {
+                LevelManager.instance.uiHandler.SprayNotif();
             }
 
             if (swingHit)
@@ -295,7 +300,7 @@ public class CombatScript : MonoBehaviour {
 
                 if (target != null && target.tag == "RedEnemy")
                 {
-                    SendDamage1();
+                    SendDamage1(target);
 
                     GameObject impactGO = Instantiate(dustImpactEffect, hit.point, dustImpactEffect.transform.rotation);
                     impactGO.GetComponent<ParticleSystem>().Play();
@@ -303,7 +308,7 @@ public class CombatScript : MonoBehaviour {
 
                 if (target2 != null && target2.tag == "Stain Enemy")
                 {
-                    SendDamage2();
+                    SendDamage2(target2);
 
                     GameObject impactGO = Instantiate(dustImpactEffect, hit.point, dustImpactEffect.transform.rotation);
                     impactGO.GetComponent<ParticleSystem>().Play();
@@ -320,38 +325,38 @@ public class CombatScript : MonoBehaviour {
        
     }
 
-    void SendDamage1()
+    void SendDamage1(DustEnemyScript target)
     {
-        RaycastHit hit;
+        //RaycastHit hit;
 
-        if (Physics.Raycast(transform.position, transform.forward, out hit, 150)) {
+        //if (Physics.Raycast(transform.position, transform.forward, out hit, 150)) {
 
-            DustEnemyScript target = hit.transform.GetComponent<DustEnemyScript>();
+            //DustEnemyScript target = hit.transform.GetComponent<DustEnemyScript>();
 
-            if (target != null) {
+            //if (target != null) {
                 target.TakeDamage(damage);
-            }
+            //}
 
             swingHit = false;
-        }
+        //}
         
     }
 
-    void SendDamage2()
+    void SendDamage2(StainEnemyScript target2)
     {
-        RaycastHit hit;
+        //RaycastHit hit;
 
-        if (Physics.Raycast(transform.position, transform.forward, out hit, 150))
-        {
+        //if (Physics.Raycast(transform.position, transform.forward, out hit, 150))
+        //{
 
-            StainEnemyScript target2 = hit.transform.GetComponent<StainEnemyScript>();
+            //StainEnemyScript target2 = hit.transform.GetComponent<StainEnemyScript>();
 
-            if (target2 != null) {
+            //if (target2 != null) {
                 target2.TakeDamage(damage);
-            }
+            //}
 
             swingHit = false;
-        }
+        //}
         
     }
 
@@ -378,11 +383,6 @@ public class CombatScript : MonoBehaviour {
             if( target3 != null && target3.tag == "BlueEnemy")
             {
                 target3.transform.position = Vector3.MoveTowards(target3.transform.position, transform.position, 0.8f);
-            }
-
-            if (targetGO != null && targetGO.tag == "BlueEnemy")
-            {
-                StartCoroutine("WrongWeaponNotify");
             }
             
         }

@@ -138,7 +138,6 @@ public class DustEnemyScript : MonoBehaviour {
     //function that calls for minus playerHealth
     void Attack()
     {
-        Debug.Log("PLayerHit");
         Player.GetComponent<PlayerScript>().playerHealth -= 1;
 
         audioSource.PlayOneShot(playerHitClip);

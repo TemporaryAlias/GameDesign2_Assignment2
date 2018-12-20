@@ -12,6 +12,8 @@ public class StainEnemyScript : MonoBehaviour {
     private bool goToGround, inGround, createGerm, isAggro;
     Vector3 startYPos;
 
+    [SerializeField] Animator anim, bodyAnim;
+
     [SerializeField] AudioClip deathClip, hitClip, shootClip, spawnClip;
 
     AudioSource audioSource;
@@ -35,6 +37,10 @@ public class StainEnemyScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
+
+        if (stainHealth <= 10) {
+            bodyAnim.SetTrigger("Stage2");
+        }
 
         if (stainHealth <= 0f)
         {
@@ -78,6 +84,7 @@ public class StainEnemyScript : MonoBehaviour {
         {
             //Instantiate(EnemyProjectile, new Vector3(transform.position.x, transform.position.y + 150, transform.position.z),transform.rotation);
             audioSource.PlayOneShot(shootClip);
+            anim.SetTrigger("Attack");
 
             Instantiate(EnemyProjectile, projectileSpawnPoint.position, transform.rotation);
             shotTimer = shotCD;

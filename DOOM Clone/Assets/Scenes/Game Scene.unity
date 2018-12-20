@@ -2549,6 +2549,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Germ
       objectReference: {fileID: 0}
+    - target: {fileID: 1469262162, guid: 6c74dba44731c1f43a9ecbc14c0c4270, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1469262168, guid: 6c74dba44731c1f43a9ecbc14c0c4270, type: 3}
       propertyPath: m_LocalPosition.x
       value: -73.88978
@@ -2777,6 +2781,10 @@ PrefabInstance:
     - target: {fileID: 784041505, guid: 1c95f12ddc1d4b84ca23bd2c8c080f8e, type: 3}
       propertyPath: m_Name
       value: DustBunny
+      objectReference: {fileID: 0}
+    - target: {fileID: 784041505, guid: 1c95f12ddc1d4b84ca23bd2c8c080f8e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 784041510, guid: 1c95f12ddc1d4b84ca23bd2c8c080f8e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4064,6 +4072,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Germ
       objectReference: {fileID: 0}
+    - target: {fileID: 1469262162, guid: 6c74dba44731c1f43a9ecbc14c0c4270, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1469262168, guid: 6c74dba44731c1f43a9ecbc14c0c4270, type: 3}
       propertyPath: m_LocalPosition.x
       value: -44.94419
@@ -4408,6 +4420,10 @@ PrefabInstance:
     - target: {fileID: 784041505, guid: 1c95f12ddc1d4b84ca23bd2c8c080f8e, type: 3}
       propertyPath: m_Name
       value: DustBunny
+      objectReference: {fileID: 0}
+    - target: {fileID: 784041505, guid: 1c95f12ddc1d4b84ca23bd2c8c080f8e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 784041510, guid: 1c95f12ddc1d4b84ca23bd2c8c080f8e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5564,6 +5580,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DustBunny
       objectReference: {fileID: 0}
+    - target: {fileID: 784041505, guid: 1c95f12ddc1d4b84ca23bd2c8c080f8e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 784041510, guid: 1c95f12ddc1d4b84ca23bd2c8c080f8e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -24.466476
@@ -5710,6 +5730,10 @@ PrefabInstance:
     - target: {fileID: 1469262162, guid: 6c74dba44731c1f43a9ecbc14c0c4270, type: 3}
       propertyPath: m_Name
       value: Germ
+      objectReference: {fileID: 0}
+    - target: {fileID: 1469262162, guid: 6c74dba44731c1f43a9ecbc14c0c4270, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1469262168, guid: 6c74dba44731c1f43a9ecbc14c0c4270, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6314,6 +6338,10 @@ PrefabInstance:
     - target: {fileID: 784041505, guid: 1c95f12ddc1d4b84ca23bd2c8c080f8e, type: 3}
       propertyPath: m_Name
       value: DustBunny
+      objectReference: {fileID: 0}
+    - target: {fileID: 784041505, guid: 1c95f12ddc1d4b84ca23bd2c8c080f8e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 784041510, guid: 1c95f12ddc1d4b84ca23bd2c8c080f8e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8267,6 +8295,8 @@ MonoBehaviour:
   stainsKilled: 0
   germsKilled: 0
   dustKilled: 0
+  enemiesLeft: 0
+  player: {fileID: 0}
 --- !u!4 &1750018642
 Transform:
   m_ObjectHideFlags: 0
@@ -9451,6 +9481,10 @@ PrefabInstance:
     - target: {fileID: 1469262162, guid: 6c74dba44731c1f43a9ecbc14c0c4270, type: 3}
       propertyPath: m_Name
       value: Germ
+      objectReference: {fileID: 0}
+    - target: {fileID: 1469262162, guid: 6c74dba44731c1f43a9ecbc14c0c4270, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1469262168, guid: 6c74dba44731c1f43a9ecbc14c0c4270, type: 3}
       propertyPath: m_LocalPosition.x
@@ -11049,7 +11083,7 @@ PrefabInstance:
     - target: {fileID: 377648956837052083, guid: ec1a944d22330cc4e8798cfe9a277c45,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.01
+      value: 3.152
       objectReference: {fileID: 0}
     - target: {fileID: 377648956837052083, guid: ec1a944d22330cc4e8798cfe9a277c45,
         type: 3}
@@ -11105,6 +11139,31 @@ PrefabInstance:
         type: 3}
       propertyPath: stainHealth
       value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 377648956837052080, guid: ec1a944d22330cc4e8798cfe9a277c45,
+        type: 3}
+      propertyPath: m_Height
+      value: 1.6372712
+      objectReference: {fileID: 0}
+    - target: {fileID: 377648956837052080, guid: ec1a944d22330cc4e8798cfe9a277c45,
+        type: 3}
+      propertyPath: m_Center.y
+      value: 1.206474
+      objectReference: {fileID: 0}
+    - target: {fileID: 377648956837052080, guid: ec1a944d22330cc4e8798cfe9a277c45,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 377648956837052080, guid: ec1a944d22330cc4e8798cfe9a277c45,
+        type: 3}
+      propertyPath: m_Radius
+      value: 0.552742
+      objectReference: {fileID: 0}
+    - target: {fileID: 377648956837052080, guid: ec1a944d22330cc4e8798cfe9a277c45,
+        type: 3}
+      propertyPath: m_Center.x
+      value: 0.052742004
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ec1a944d22330cc4e8798cfe9a277c45, type: 3}

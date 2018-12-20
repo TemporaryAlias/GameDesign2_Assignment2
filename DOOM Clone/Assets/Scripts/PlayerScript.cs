@@ -110,7 +110,8 @@ public class PlayerScript : MonoBehaviour {
     {
         audioSource.PlayOneShot(deathClip);
         dead = true;
-        LevelManager.instance.uiHandler.StartFadeOut(0);
+        LevelManager.instance.enemiesLeft = EnemyCount();
+        LevelManager.instance.uiHandler.StartFadeOut(4);
     }
 
     void OnCollisionEnter(Collision collision)

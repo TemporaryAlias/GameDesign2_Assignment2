@@ -252,8 +252,6 @@ public class MouseCombatScript : MonoBehaviour
         _vacuum.SetActive(true);
         _blueWeapon.SetActive(false);
         _redWeapon.SetActive(false);
-
-        audioSouce.PlayOneShot(vacClip);
     }
 
     //shoot function, creates a raycast in front of player, if it hits the "Blue Enemy", that enemy's script is called and it takes damage

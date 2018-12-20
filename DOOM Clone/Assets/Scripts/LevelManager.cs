@@ -21,8 +21,9 @@ public class LevelManager : MonoBehaviour
     public UIHandler uiHandler;
 
     public int stainsKilled, germsKilled, dustKilled;
+    public float enemiesLeft;
 
-    PlayerScript player;
+    public PlayerScript player;
     MouseMovementScript playerMouse;
 
     AudioSource audioSource;
@@ -40,6 +41,7 @@ public class LevelManager : MonoBehaviour
             stainsKilled = 0;
             germsKilled = 0;
             dustKilled = 0;
+            enemiesLeft = 0;
         } else {
             Cursor.lockState = CursorLockMode.None;
         }
@@ -53,7 +55,7 @@ public class LevelManager : MonoBehaviour
 
         if (player != null) {
             if (player.EnemyCount() <= 0) {
-                ChangeScene(3);
+                uiHandler.StartFadeOut(3);
             }
         }
     }
