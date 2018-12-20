@@ -417,6 +417,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiHandler: {fileID: 0}
+  stainsKilled: 0
+  germsKilled: 0
+  dustKilled: 0
+  enemiesLeft: 0
+  player: {fileID: 0}
 --- !u!4 &384855640
 Transform:
   m_ObjectHideFlags: 0
@@ -554,7 +559,7 @@ RectTransform:
   m_GameObject: {fileID: 397259985}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.861938, y: 1.861938, z: 1.861938}
+  m_LocalScale: {x: 1.861938, y: 2.3695023, z: 1.861938}
   m_Children: []
   m_Father: {fileID: 551244345}
   m_RootOrder: 0
@@ -584,7 +589,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300006, guid: a7953c50a3f4af84a85ae6660150a48b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -803,6 +808,7 @@ MonoBehaviour:
   fadeImage: {fileID: 1206151650}
   sprayIcon: {fileID: 0}
   clothIcon: {fileID: 0}
+  vacIcon: {fileID: 0}
   fadeTime: 0.03
 --- !u!1 &1022958623
 GameObject:

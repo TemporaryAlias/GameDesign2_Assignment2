@@ -14,6 +14,8 @@ public class KeyBindsScript : MonoBehaviour {
     public GameObject mouseText, mouseButton, keyboardButton, keyBoardText;
     enum Enum {forward, back, left, right,vacuum};
     public bool forwardMap, backMap, leftMap, rightMap, hooverMap, meleeMap, rangedMap, mouseOnly;
+    GameObject oldKeyFinder;
+
 	// Use this for initialization
 	void Start () {
         forward = KeyCode.W;
@@ -22,7 +24,16 @@ public class KeyBindsScript : MonoBehaviour {
         right = KeyCode.D;
         hoover = KeyCode.F;
         
-	}
+        oldKeyFinder = Resources.Load<GameObject>("Rebind");
+
+        SceneManager.sceneLoaded += OnSceneLoad;
+    }
+
+    void OnSceneLoad(Scene scene, LoadSceneMode mode) {
+        if (scene.name == "Controls Scene") {
+            Destroy(this.gameObject);
+        }
+    }
 
     private void Update()
     {
@@ -148,7 +159,7 @@ public class KeyBindsScript : MonoBehaviour {
         }
         //DontDestroyOnLoad(this.gameObject);
 
-        if(mouseOnly)
+        if (mouseOnly)
         {
             GameObject player = GameObject.FindGameObjectWithTag("Player");
 
@@ -178,6 +189,39 @@ public class KeyBindsScript : MonoBehaviour {
                 if (mouseCombat != null)
                 {
                     mouseCombat.enabled = true;
+                }
+            }
+        }
+        else
+        {
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+
+            if (player != null)
+            {
+                PlayerScript playerKeyboard = player.GetComponent<PlayerScript>();
+                CombatScript combatKeyboard = player.GetComponent<CombatScript>();
+                MouseMovementScript mouseMove = player.GetComponent<MouseMovementScript>();
+                MouseCombatScript mouseCombat = player.GetComponent<MouseCombatScript>();
+
+
+                if (playerKeyboard != null)
+                {
+                    playerKeyboard.enabled = true;
+                }
+
+                if (combatKeyboard != null)
+                {
+                    combatKeyboard.enabled = true;
+                }
+
+                if (mouseMove != null)
+                {
+                    mouseMove.enabled = false;
+                }
+
+                if (mouseCombat != null)
+                {
+                    mouseCombat.enabled = false;
                 }
             }
         }
@@ -249,10 +293,19 @@ public class KeyBindsScript : MonoBehaviour {
         mouseText.SetActive(false);
         keyboardButton.SetActive(false);
         mouseButton.SetActive(true);
+
+        forward = KeyCode.W;
+        back = KeyCode.S;
+        left = KeyCode.A;
+        right = KeyCode.D;
+        hoover = KeyCode.F;
+        melee = KeyCode.Alpha1;
+        ranged = KeyCode.Alpha2;
     }
 
     public void ChangeScene(int sceneIndex)
     {
+
         PrefabUtility.CreatePrefab("Assets/Resources/" + gameObject.name + ".prefab", gameObject);
         LevelManager.instance.uiHandler.StartFadeOut(sceneIndex);
         DontDestroyOnLoad(this.gameObject);

@@ -82,7 +82,7 @@ public class MouseCombatScript : MonoBehaviour
                     melee = true;
                 }
 
-                if(target2 != null && target2.tag == "Stain Enemy" && target2.stainHealth == 10)
+                if(target2 != null && target2.tag == "Stain Enemy" && target2.stainHealth <= 10)
                 {
                     melee = true;
                 }
@@ -178,7 +178,6 @@ public class MouseCombatScript : MonoBehaviour
 
             if (Physics.Raycast(transform.position, transform.forward, out hit, 5f) && Input.GetMouseButton(0))
             {
-                Debug.Log(hit.transform.name);
 
                 GameObject target = hit.transform.gameObject;
 
@@ -417,7 +416,6 @@ public class MouseCombatScript : MonoBehaviour
 
         if (Physics.Raycast(transform.position, transform.forward, out hit))
         {
-            Debug.Log(hit.transform.name);
 
             DustEnemyScript target = hit.transform.GetComponent<DustEnemyScript>();
             StainEnemyScript target2 = hit.transform.GetComponent<StainEnemyScript>();

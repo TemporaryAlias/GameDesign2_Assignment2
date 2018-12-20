@@ -11432,7 +11432,7 @@ PrefabInstance:
     - target: {fileID: 5998753140771912244, guid: 74a5ab4c22a709e43895c9884b296d60,
         type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6598531200101331726, guid: 74a5ab4c22a709e43895c9884b296d60,
         type: 3}
@@ -11467,7 +11467,7 @@ PrefabInstance:
     - target: {fileID: 3983659926705325536, guid: 74a5ab4c22a709e43895c9884b296d60,
         type: 3}
       propertyPath: enterEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 2
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3983659926705325536, guid: 74a5ab4c22a709e43895c9884b296d60,
         type: 3}
@@ -11477,7 +11477,7 @@ PrefabInstance:
     - target: {fileID: 3983659926705325536, guid: 74a5ab4c22a709e43895c9884b296d60,
         type: 3}
       propertyPath: exitEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 2
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3983659926705325536, guid: 74a5ab4c22a709e43895c9884b296d60,
         type: 3}
@@ -11488,42 +11488,42 @@ PrefabInstance:
         type: 3}
       propertyPath: enterEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 982251796}
+      objectReference: {fileID: 2137545843}
     - target: {fileID: 3983659926705325536, guid: 74a5ab4c22a709e43895c9884b296d60,
         type: 3}
       propertyPath: enterEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: StarTextFadeIn
+      value: SetActive
       objectReference: {fileID: 0}
     - target: {fileID: 3983659926705325536, guid: 74a5ab4c22a709e43895c9884b296d60,
         type: 3}
       propertyPath: enterEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.UI.Text, UnityEngine.UI
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 3983659926705325536, guid: 74a5ab4c22a709e43895c9884b296d60,
         type: 3}
       propertyPath: enterEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
-      objectReference: {fileID: 2137545845}
+      objectReference: {fileID: 0}
     - target: {fileID: 3983659926705325536, guid: 74a5ab4c22a709e43895c9884b296d60,
         type: 3}
       propertyPath: exitEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 982251796}
+      objectReference: {fileID: 2137545843}
     - target: {fileID: 3983659926705325536, guid: 74a5ab4c22a709e43895c9884b296d60,
         type: 3}
       propertyPath: exitEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: StartTextFade
+      value: SetActive
       objectReference: {fileID: 0}
     - target: {fileID: 3983659926705325536, guid: 74a5ab4c22a709e43895c9884b296d60,
         type: 3}
       propertyPath: exitEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.UI.Text, UnityEngine.UI
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 3983659926705325536, guid: 74a5ab4c22a709e43895c9884b296d60,
         type: 3}
       propertyPath: exitEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
-      objectReference: {fileID: 2137545845}
+      objectReference: {fileID: 0}
     - target: {fileID: 3983659926705325536, guid: 74a5ab4c22a709e43895c9884b296d60,
         type: 3}
       propertyPath: enterEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
@@ -11578,6 +11578,11 @@ PrefabInstance:
         type: 3}
       propertyPath: exitEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 3983659926705325536, guid: 74a5ab4c22a709e43895c9884b296d60,
+        type: 3}
+      propertyPath: enterEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 74a5ab4c22a709e43895c9884b296d60, type: 3}
