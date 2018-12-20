@@ -13,9 +13,15 @@ public class DustEnemyScript : MonoBehaviour {
     [SerializeField] Animator anim;
     NavMeshAgent navAgent;
 
+    [SerializeField] AudioClip deathSound, playerHitClip, hitClip;
+
+    AudioSource audioSource;
+
 	// Use this for initialization
 	void Start () {
         navAgent = GetComponent<NavMeshAgent>();
+
+        audioSource = GetComponent<AudioSource>();
         
         //attackCD = 2;
         //CDTime = attackCD;
@@ -105,6 +111,8 @@ public class DustEnemyScript : MonoBehaviour {
         EnemyHealth -= dmg;
         transform.localScale = new Vector3((float)(transform.localScale.x * 0.75), (float)(transform.localScale.y * 0.75), (float)(transform.localScale.z * 0.75));
 
+        audioSource.PlayOneShot(hitClip);
+
         if (EnemyHealth <= 0f)
         {
             Die();
@@ -117,6 +125,8 @@ public class DustEnemyScript : MonoBehaviour {
     {
         Debug.Log("PLayerHit");
         Player.GetComponent<PlayerScript>().playerHealth -= 1;
+
+        audioSource.PlayOneShot(playerHitClip);
         attackCD = 4;
 
         //makes enemy jump just to show the attack went through, placeholder anim
@@ -126,6 +136,7 @@ public class DustEnemyScript : MonoBehaviour {
 
     void Die()
     {
+        LevelManager.instance.PlaySound(deathSound);
         Destroy(gameObject);
     }
 

@@ -8,18 +8,26 @@ public class PlayerScript : MonoBehaviour {
 
     private Rigidbody _myRb;
     public float playerHealth, maxHealth;
-    private float dustEnemycount, germEnemycount, stainEnemycount, maxEnemies, currentEnemies;
+    private float dustEnemycount, germEnemycount, stainEnemycount, maxEnemies;
+
+    public float currentEnemies;
     
     [SerializeField] float speed;
     private GameObject keyFinder;
     [SerializeField] Slider healthBar;
     [SerializeField] Text remainingEnemies;
 
+    [SerializeField] AudioClip deathClip, hitClip;
+
+    [SerializeField] AudioSource audioSource;
+
     public bool dead;
     
 
 	// Use this for initialization
 	void Start () {
+        audioSource = GetComponent<AudioSource>();
+
         keyFinder = Resources.Load<GameObject>("Rebind");
         _myRb = GetComponent<Rigidbody>();
         
@@ -100,6 +108,7 @@ public class PlayerScript : MonoBehaviour {
 
     void Die()
     {
+        audioSource.PlayOneShot(deathClip);
         dead = true;
         LevelManager.instance.uiHandler.StartFadeOut(0);
     }
@@ -111,6 +120,8 @@ public class PlayerScript : MonoBehaviour {
         {
             Debug.Log("hit");
             playerHealth -= 1;
+
+            audioSource.PlayOneShot(hitClip);
         }
     }
 

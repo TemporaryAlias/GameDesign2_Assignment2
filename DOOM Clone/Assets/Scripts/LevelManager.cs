@@ -14,11 +14,15 @@ public class LevelManager : MonoBehaviour
         }
 
         instance = this;
+
+        DontDestroyOnLoad(gameObject);
     }
 
     public UIHandler uiHandler;
 
     PlayerScript player;
+
+    AudioSource audioSource;
 
     void Start() {
         SceneManager.sceneLoaded += OnSceneLoad;
@@ -26,7 +30,11 @@ public class LevelManager : MonoBehaviour
     
     void Update()
     {
-        
+        if (player != null) {
+            if (player.currentEnemies == 0) {
+                ChangeScene(3);
+            }
+        }
     }
     
     public void ChangeScene(int newSceneIndex) {
@@ -36,12 +44,17 @@ public class LevelManager : MonoBehaviour
     void OnSceneLoad(Scene scene, LoadSceneMode mode) {
         uiHandler = FindObjectOfType<UIHandler>();
         player = FindObjectOfType<PlayerScript>();
+        audioSource = GetComponent<AudioSource>();
 
         if (player != null) {
             Cursor.lockState = CursorLockMode.Locked;
         } else {
             Cursor.lockState = CursorLockMode.None;
         } 
+    }
+
+    public void PlaySound(AudioClip sound) {
+        audioSource.PlayOneShot(sound);
     }
 
 }

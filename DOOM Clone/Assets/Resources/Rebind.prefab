@@ -43,13 +43,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ac58ceb5c3f73746a3c8f0fa4b2bc3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forward: 97
+  forward: 119
   back: 115
-  left: 100
-  right: 119
+  left: 97
+  right: 100
   hoover: 102
   melee: 0
-  ranged: 0
+  ranged: 52
   forwardButton: {fileID: 0}
   backButton: {fileID: 0}
   leftButton: {fileID: 0}
