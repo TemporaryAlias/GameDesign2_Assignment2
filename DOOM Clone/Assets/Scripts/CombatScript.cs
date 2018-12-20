@@ -32,7 +32,7 @@ public class CombatScript : MonoBehaviour {
     void Start () {
         audioSouce = GetComponent<AudioSource>();
 
-        keyFinder = Resources.Load<GameObject>("Rebind");
+        keyFinder = LevelManager.instance.keyRebinds.gameObject;
         playerAnim = GetComponent<Animator>();
         //swordAnim = GetComponentInChildren
         _isBlue = true;
@@ -57,13 +57,13 @@ public class CombatScript : MonoBehaviour {
 
             //Switches between the two weapon types. Blue Weapon is the shotgun, RedWeapon is the sword/melee
 
-            if (Input.GetAxis("Mouse ScrollWheel") > 0 || Input.GetKeyDown(keyFinder.GetComponent<KeyBindsScript>().ranged))
+            if (Input.GetKeyDown(keyFinder.GetComponent<KeyBindsScript>().ranged) || Input.GetAxis("Mouse ScrollWheel") > 0)
             {
                 BlueWeapon();
                 _isBlue = true;
                 _isRed = false;
                 _vaccuumOn = false;
-            } else if (Input.GetAxis("Mouse ScrollWheel") < 0 || Input.GetKeyDown(keyFinder.GetComponent<KeyBindsScript>().melee))
+            } else if (Input.GetKeyDown(keyFinder.GetComponent<KeyBindsScript>().melee) || Input.GetAxis("Mouse ScrollWheel") < 0)
             {
                 RedWeapon();
                 _isRed = true;

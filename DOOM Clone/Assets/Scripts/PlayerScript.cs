@@ -28,7 +28,7 @@ public class PlayerScript : MonoBehaviour {
 	void Start () {
         audioSource = GetComponent<AudioSource>();
 
-        keyFinder = Resources.Load<GameObject>("Rebind");
+        keyFinder = LevelManager.instance.keyRebinds.gameObject;
         _myRb = GetComponent<Rigidbody>();
         
         //locks the cursor, making it unusable

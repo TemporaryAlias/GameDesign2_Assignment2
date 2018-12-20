@@ -24,15 +24,15 @@ public class KeyBindsScript : MonoBehaviour {
         right = KeyCode.D;
         hoover = KeyCode.F;
         
-        oldKeyFinder = Resources.Load<GameObject>("Rebind");
+        //oldKeyFinder = Resources.Load<GameObject>("Rebind");
 
         SceneManager.sceneLoaded += OnSceneLoad;
     }
 
     void OnSceneLoad(Scene scene, LoadSceneMode mode) {
-        if (scene.name == "Controls Scene") {
-            Destroy(this.gameObject);
-        }
+        //if (scene.name == "Controls Scene") {
+         //   Destroy(this.gameObject);
+       //}
     }
 
     private void Update()
@@ -293,20 +293,12 @@ public class KeyBindsScript : MonoBehaviour {
         mouseText.SetActive(false);
         keyboardButton.SetActive(false);
         mouseButton.SetActive(true);
-
-        forward = KeyCode.W;
-        back = KeyCode.S;
-        left = KeyCode.A;
-        right = KeyCode.D;
-        hoover = KeyCode.F;
-        melee = KeyCode.Alpha1;
-        ranged = KeyCode.Alpha2;
     }
 
     public void ChangeScene(int sceneIndex)
     {
-
-        PrefabUtility.CreatePrefab("Assets/Resources/" + gameObject.name + ".prefab", gameObject);
+        LevelManager.instance.keyRebinds = this;
+        //PrefabUtility.CreatePrefab("Assets/Resources/" + gameObject.name + ".prefab", gameObject);
         LevelManager.instance.uiHandler.StartFadeOut(sceneIndex);
         DontDestroyOnLoad(this.gameObject);
         

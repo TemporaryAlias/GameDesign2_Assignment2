@@ -23,6 +23,8 @@ public class LevelManager : MonoBehaviour
     public int stainsKilled, germsKilled, dustKilled;
     public float enemiesLeft;
 
+    public KeyBindsScript keyRebinds;
+
     public PlayerScript player;
     MouseMovementScript playerMouse;
 
@@ -65,6 +67,10 @@ public class LevelManager : MonoBehaviour
     }
 
     void OnSceneLoad(Scene scene, LoadSceneMode mode) {
+        if (scene.name == "Controls Scene" && keyRebinds != null) {
+            Destroy(keyRebinds.gameObject);
+        }
+
         uiHandler = FindObjectOfType<UIHandler>();
         player = FindObjectOfType<PlayerScript>();
         playerMouse = FindObjectOfType<MouseMovementScript>();
