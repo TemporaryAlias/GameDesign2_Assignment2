@@ -185,10 +185,10 @@ public class KeyBindsScript : MonoBehaviour {
         rangedMap = true;
     }
 
-    public void ChangeScene()
+    public void ChangeScene(int sceneIndex)
     {
         PrefabUtility.CreatePrefab("Assets/Resources/" + gameObject.name + ".prefab", gameObject);
-        SceneManager.LoadScene("Game Scene", LoadSceneMode.Single);
+        LevelManager.instance.uiHandler.StartFadeOut(sceneIndex);
         DontDestroyOnLoad(this.gameObject);
         
     }
