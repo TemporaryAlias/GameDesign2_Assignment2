@@ -23,7 +23,7 @@ public class DustEnemyScript : MonoBehaviour {
 
         audioSource = GetComponent<AudioSource>();
         
-        //attackCD = 2;
+        attackCD = CDTime;
         //CDTime = attackCD;
         EnemyRB = GetComponent<Rigidbody>();
 
@@ -67,7 +67,7 @@ public class DustEnemyScript : MonoBehaviour {
             PlayerScript target = hit.transform.GetComponent<PlayerScript>();
             MouseMovementScript target2 = hit.transform.GetComponent<MouseMovementScript>();
 
-            if(target != null && target.tag == "Player")
+            if(target != null)
             {
                 _attack = true;                
             }
@@ -176,6 +176,8 @@ public class DustEnemyScript : MonoBehaviour {
     {
         if (collision.gameObject.tag == "Player" && (Player.GetComponent<CombatScript>().isSucking) || Player.GetComponent<MouseCombatScript>().isSucking)
         {
+            LevelManager.instance.PlaySound(deathSound);
+            LevelManager.instance.dustKilled += 1;
             Destroy(this.gameObject);
         }
     }

@@ -7,7 +7,7 @@ public class UIHandler : MonoBehaviour
 {
     public Image fadeImage;
 
-    public Animator sprayIcon, clothIcon;
+    public Animator sprayIcon, clothIcon, vacIcon;
 
     public float fadeTime;
 
@@ -25,6 +25,10 @@ public class UIHandler : MonoBehaviour
 
     public void SprayNotif() {
         sprayIcon.SetTrigger("Flash");
+    }
+
+    public void VacNotif() {
+        vacIcon.SetTrigger("Flash");
     }
 
 

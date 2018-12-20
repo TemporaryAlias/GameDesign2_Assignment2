@@ -101,6 +101,8 @@ public class GermEnemyScript : MonoBehaviour {
     {
         if (collision.gameObject.tag == "Player" && (Player.GetComponent<CombatScript>().isSucking || Player.GetComponent<MouseCombatScript>().isSucking))
         {
+            LevelManager.instance.PlaySound(deathClip);
+            LevelManager.instance.germsKilled += 1;
             Destroy(this.gameObject);
         }
     }

@@ -28,9 +28,6 @@ public class CombatScript : MonoBehaviour {
 
     AudioSource audioSouce;
 
-    //TEMP: Text to notify if wrong weapon was used
-    public Text notifyText;
-
     // Use this for initialization
     void Start () {
         audioSouce = GetComponent<AudioSource>();
@@ -45,9 +42,6 @@ public class CombatScript : MonoBehaviour {
 
         vacBar.maxValue = maxStatic;
         vacBar.value = 0;
-        
-        //TEMP: Set notify text to nothing
-        notifyText.text = "";
     }
 	
 	// Update is called once per frame
@@ -158,6 +152,7 @@ public class CombatScript : MonoBehaviour {
             if (staticForce >= maxStatic)
             {
                 canHoover = true;
+                LevelManager.instance.uiHandler.VacNotif();
             }
 
             if (suckTimer <= 0)
@@ -281,7 +276,6 @@ public class CombatScript : MonoBehaviour {
             }
 
             if (targetGO != null && targetGO.tag == "BlueEnemy") {
-                StartCoroutine("WrongWeaponNotify");
                 LevelManager.instance.uiHandler.SprayNotif();
             }
 
@@ -406,15 +400,6 @@ public class CombatScript : MonoBehaviour {
         }
         
         
-    }
-
-    //TEMP: Coroutine to handle notify text on wrong weapon used for playtest
-    IEnumerator WrongWeaponNotify() {
-        notifyText.text = "Attack is ineffective! Try a different weapon!";
-
-        yield return new WaitForSeconds(2);
-
-        notifyText.text = "";
     }
 
     /*private void OnTriggerEnter(Collider collision)

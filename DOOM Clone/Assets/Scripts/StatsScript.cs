@@ -11,8 +11,8 @@ public class StatsScript : MonoBehaviour
     void Update()
     {
         stainsText.text = "Stains Cleaned: " + LevelManager.instance.stainsKilled.ToString();
-        bunniesText.text = "Stains Cleaned: " + LevelManager.instance.dustKilled.ToString();
-        germsText.text = "Stains Cleaned: " + LevelManager.instance.germsKilled.ToString();
+        bunniesText.text = "Dust Bunnies Cleaned: " + LevelManager.instance.dustKilled.ToString();
+        germsText.text = "Germs Cleaned: " + LevelManager.instance.germsKilled.ToString();
         enemiesLeft.text = "Enemies Remaining: " + LevelManager.instance.enemiesLeft;
     }
 }

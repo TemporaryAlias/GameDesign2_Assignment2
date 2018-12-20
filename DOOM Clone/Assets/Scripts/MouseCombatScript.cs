@@ -259,12 +259,11 @@ public class MouseCombatScript : MonoBehaviour
     public void Shoot()
     {
         muzzleFlash.Play();
-        RaycastHit hit;
         audioSouce.PlayOneShot(rangedClip);
 
+        RaycastHit hit;
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootRange))
         {
-            Debug.Log(hit.transform.name);
 
             GermEnemyScript target1 = hit.transform.GetComponent<GermEnemyScript>();
             StainEnemyScript target2 = hit.transform.GetComponent<StainEnemyScript>();
@@ -290,9 +289,12 @@ public class MouseCombatScript : MonoBehaviour
                 GameObject impactGO = Instantiate(_impactEffect, hit.point, _impactEffect.transform.rotation);
                 impactGO.GetComponent<ParticleSystem>().Play();
             }
+            else if (target2 != null && target2.tag == "Stain Enemy" && target2.stainHealth <= 10)
+            {
+                LevelManager.instance.uiHandler.ClothNotif();
+            }
             else if (targetGO != null && targetGO.tag == "RedEnemy")
             {
-                StartCoroutine("WrongWeaponNotify");
                 LevelManager.instance.uiHandler.ClothNotif();
             }
 
@@ -307,12 +309,12 @@ public class MouseCombatScript : MonoBehaviour
     public void Swing()
     {
 
+
         audioSouce.PlayOneShot(meleeClip);
 
         RaycastHit hit;
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, meleeRange))
         {
-            Debug.Log(hit.transform.name);
 
             DustEnemyScript target = hit.transform.GetComponent<DustEnemyScript>();
             StainEnemyScript target2 = hit.transform.GetComponent<StainEnemyScript>();
@@ -330,14 +332,17 @@ public class MouseCombatScript : MonoBehaviour
 
             if (targetGO != null && targetGO.tag == "BlueEnemy")
             {
-                StartCoroutine("WrongWeaponNotify");
                 LevelManager.instance.uiHandler.SprayNotif();
             }
 
-            if (target2 != null && target2.tag == "Stain Enemy" && target2.stainHealth == 10)
+            if (target2 != null && target2.tag == "Stain Enemy" && target2.stainHealth <= 10)
             {
                 swingHit = true;
-                SendDamage2();
+                //SendDamage2(target2);
+            }
+            else if (target2 != null && target2.tag == "Stain Enemy" && target2.stainHealth > 10)
+            {
+                LevelManager.instance.uiHandler.SprayNotif();
             }
 
             if (swingHit)
@@ -346,7 +351,7 @@ public class MouseCombatScript : MonoBehaviour
 
                 if (target != null && target.tag == "RedEnemy")
                 {
-                    SendDamage1();
+                    SendDamage1(target);
 
                     GameObject impactGO = Instantiate(dustImpactEffect, hit.point, dustImpactEffect.transform.rotation);
                     impactGO.GetComponent<ParticleSystem>().Play();
@@ -354,7 +359,7 @@ public class MouseCombatScript : MonoBehaviour
 
                 if (target2 != null && target2.tag == "Stain Enemy")
                 {
-                    SendDamage2();
+                    SendDamage2(target2);
 
                     GameObject impactGO = Instantiate(dustImpactEffect, hit.point, dustImpactEffect.transform.rotation);
                     impactGO.GetComponent<ParticleSystem>().Play();
@@ -371,41 +376,38 @@ public class MouseCombatScript : MonoBehaviour
 
     }
 
-    void SendDamage1()
+    void SendDamage1(DustEnemyScript target)
     {
-        RaycastHit hit;
+        //RaycastHit hit;
 
-        if (Physics.Raycast(transform.position, transform.forward, out hit, 150))
-        {
+        //if (Physics.Raycast(transform.position, transform.forward, out hit, 150)) {
 
-            DustEnemyScript target = hit.transform.GetComponent<DustEnemyScript>();
+        //DustEnemyScript target = hit.transform.GetComponent<DustEnemyScript>();
 
-            if (target != null)
-            {
-                target.TakeDamage(damage);
-            }
+        //if (target != null) {
+        target.TakeDamage(damage);
+        //}
 
-            swingHit = false;
-        }
+        swingHit = false;
+        //}
 
     }
 
-    void SendDamage2()
+    void SendDamage2(StainEnemyScript target2)
     {
-        RaycastHit hit;
+        //RaycastHit hit;
 
-        if (Physics.Raycast(transform.position, transform.forward, out hit, 150))
-        {
+        //if (Physics.Raycast(transform.position, transform.forward, out hit, 150))
+        //{
 
-            StainEnemyScript target2 = hit.transform.GetComponent<StainEnemyScript>();
+        //StainEnemyScript target2 = hit.transform.GetComponent<StainEnemyScript>();
 
-            if (target2 != null)
-            {
-                target2.TakeDamage(damage);
-            }
+        //if (target2 != null) {
+        target2.TakeDamage(damage);
+        //}
 
-            swingHit = false;
-        }
+        swingHit = false;
+        //}
 
     }
 
@@ -433,11 +435,6 @@ public class MouseCombatScript : MonoBehaviour
             if (target3 != null && target3.tag == "BlueEnemy")
             {
                 target3.transform.position = Vector3.MoveTowards(target3.transform.position, transform.position, 0.8f);
-            }
-
-            if (targetGO != null && targetGO.tag == "BlueEnemy")
-            {
-                StartCoroutine("WrongWeaponNotify");
             }
 
         }
